@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fotópályázataim</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Fotópályázati galéria</h1>
+  <div id="gallery"></div>
+
+  <script>
+    async function loadGallery() {
+      const response = await fetch('data/photos.json');
+      const photos = await response.json();
+      const gallery = document.getElementById('gallery');
+
+      photos.forEach(photo => {
+        const div = document.createElement('div');
+        div.className = 'photo';
+
+        div.innerHTML = `
+          <img src="images/${photo.filename}" alt="${photo.title}" />
+          <h2>${photo.title}</h2>
+          <ul>
+            ${photo.exhibitions.map(exh => `
+              <li><strong>${exh.year}</strong> – ${exh.name}: ${exh.result}</li>
+            `).join('')}
+          </ul>
+        `;
+        gallery.appendChild(div);
+      });
+    }
+
+    loadGallery();
+  </script>
+</body>
+</html>

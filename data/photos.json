@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Naplemente a Tiszán",
+    "filename": "naplemente.jpg",
+    "exhibitions": [
+      {
+        "name": "XXXI. Alföldi Fotószalon",
+        "year": 2023,
+        "result": "Elfogadva"
+      },
+      {
+        "name": "Nemzetközi Természetfotó Verseny",
+        "year": 2024,
+        "result": "Bronzérem"
+      }
+    ]
+  },
+  {
+    "title": "Város fényeiben",
+    "filename": "varos_fenyekben.jpg",
+    "exhibitions": [
+      {
+        "name": "Éjszakai Fotók Biennáléja",
+        "year": 2022,
+        "result": "Különdíj"
+      }
+    ]
+  }
+]
