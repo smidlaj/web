@@ -1,28 +1,27 @@
 [
   {
     "title": "Naplemente a Tiszán",
+    "models": ["Kovács Anna", "Szabó László"],
+    "note": "Ez a kép egy spontán pillanatot örökített meg.",
+    "tags": ["természet", "naplemente", "víz"],
     "filename": "naplemente.jpg",
-    "exhibitions": [
+    "results": [
       {
-        "name": "XXXI. Alföldi Fotószalon",
-        "year": 2023,
-        "result": "Elfogadva"
+        "contestName": "XXXI. Alföldi Fotószalon",
+        "contestIds": ["AF2023", "ID1234"],
+        "country": "Magyarország",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
       },
       {
-        "name": "Nemzetközi Természetfotó Verseny",
-        "year": 2024,
-        "result": "Bronzérem"
-      }
-    ]
-  },
-  {
-    "title": "Város fényeiben",
-    "filename": "varos_fenyekben.jpg",
-    "exhibitions": [
-      {
-        "name": "Éjszakai Fotók Biennáléja",
-        "year": 2022,
-        "result": "Különdíj"
+        "contestName": "Nemzetközi Természetfotó Verseny",
+        "contestIds": ["NTF2024"],
+        "country": "Németország",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Bronzérem",
+        "certificateImage": "bronz_naplemente.jpg"
       }
     ]
   }
