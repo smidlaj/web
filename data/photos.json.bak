@@ -170,7 +170,7 @@
     "filename": "Cat on the couch.jpg",
     "results": [
       {
-        "id": "MAFISZ 2024/13",
+        "id": "MAFOSZ 2024/13",
         "accepted": true,
         "awarded": false,
         "awardName": null
@@ -262,16 +262,114 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }
-       ,
+      },
       {
-        "id": "FIAP 2025/209",
+        "id": "FIAP 2025/245",
         "accepted": true,
         "awarded": false,
         "awardName": null
       }     
       
     ]
-  }    
+  },
+  {
+    "title": "Marilyn with cigarette",
+    "models": ["Szentgyörgyi-Kozma Valéria"],
+    "note": "",
+    "tags": ["color", "portrait", "marilyn"],
+    "filename": "Marilyn with cigarette.jpg",
+    "results": [
+      {
+        "id": "MAFOSZ 2025/01",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/101",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/020",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/063",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/080",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/082",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/649",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Bronze",
+        "certificateImage": "PHOTOHOUSE DIGITAL 2024 - A3 Certificate.jpg"
+      },
+      {
+        "id": "FIAP 2024/648",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "FKNS WINTER CIRCUIT 2024 - Kula - Jozsef Dr. Smidla - C3 Marilyn with cigarette.jpg"
+      },
+      {
+        "id": "FIAP 2025/031",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "PBNS 2025 - D2 Certificate.jpg"
+      },
+      {
+        "id": "FIAP 2025/114",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/032",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "FKA WINTER 2025 - Jozsef Dr. Smidla - D2 Marilyn with cigarette.jpg"
+      },
+      {
+        "id": "FIAP 2025/176",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "KULA 2025 - Jozsef Dr. Smidla - C3 Marilyn with cigarette.jpg"
+      },
+      {
+        "id": "FIAP 2025/245",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "DPW SERBIA 2025 - Jozsef Dr. Smidla - C2 Marilyn with cigarette.jpg"
+      },
+      {
+        "id": "FIAP 2025/300",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  }
   
 ]

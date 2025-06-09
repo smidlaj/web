@@ -2,6 +2,7 @@
 <html lang="hu">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fotópályázati galéria</title>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -17,23 +18,28 @@
     .active-album { font-weight: bold; }
   </style>
 </head>
+
 <body>
-  <aside>
-    <h3>Albumok </h3>
-    <div id="album-list"></div>
-  </aside>
-  <main>
-    <input type="text" id="search" placeholder="Keresés cím, modell vagy pályázat szerint..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;">
-    <div id="gallery" class="photo-grid"></div>
-    <div class="pagination" id="pagination"></div>
-  </main>
+    <button id="menu-toggle" aria-label="Menü megnyitása">☰</button>
+    <aside>
+      <h3>Albumok</h3>
+      <div id="album-list"></div>
+    </aside>
+    <div id="content-wrapper">
+    <main>
+        <input type="text" id="search" placeholder="Keresés cím, modell vagy pályázat szerint..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;">
+        <div id="gallery" class="photo-grid"></div>
+        <div class="pagination" id="pagination"></div>
+    </main>
+    </div>
 
   <script>
     const PAGE_SIZE = 6;
     const albums = [
       { name: "Összes", tags: [] },
       { name: "Monokróm", tags: ["bw"] },
-      { name: "Színes", tags: ["color"] }
+      { name: "Színes", tags: ["color"] },
+      { name: "Marilyn", tags: ["marilyn"] }
     ];
 
     let photos = [];
@@ -73,21 +79,27 @@
       });
     }
 
-    function applyFilters() {
-      filteredPhotos = photos.filter(photo => {
-        const matchesSearch = searchTerm === "" || (
-          photo.title.toLowerCase().includes(searchTerm) ||
-          (photo.models || []).some(m => m.toLowerCase().includes(searchTerm)) ||
-          (photo.results || []).some(r => r.contestName.toLowerCase().includes(searchTerm))
-        );
+function applyFilters() {
+  filteredPhotos = photos.filter(photo => {
+    const matchesSearch =
+      searchTerm === "" || (
+        photo.title.toLowerCase().includes(searchTerm) ||
+        (photo.models || []).some(m => m.toLowerCase().includes(searchTerm)) ||
+        (photo.results || []).some(r => {
+          const salon = findSalonById(r.id);
+          return salon && salon.name.toLowerCase().includes(searchTerm);
+        })
+      );
 
-        const matchesAlbum = currentAlbum.tags.length === 0 ||
-          currentAlbum.tags.some(tag => (photo.tags || []).includes(tag));
+    const matchesAlbum =
+      currentAlbum.tags.length === 0 ||
+      currentAlbum.tags.some(tag => (photo.tags || []).includes(tag));
 
-        return matchesSearch && matchesAlbum;
-      });
-      renderGallery();
-    }
+    return matchesSearch && matchesAlbum;
+  });
+
+  renderGallery();
+}
 
     function renderGallery() {
       const gallery = document.getElementById("gallery");
@@ -169,7 +181,23 @@
     
     function findSalonById(id) {
         return salons.find(salon => salon.ids.includes(id));
-    }    
+    }
+    
+const menuToggle = document.getElementById('menu-toggle');
+const aside = document.querySelector('aside');
+const contentWrapper = document.getElementById('content-wrapper');
+
+menuToggle.addEventListener('click', () => {
+  const isOpen = aside.classList.toggle('open');
+  if (isOpen) {
+    contentWrapper.classList.add('shifted');
+    menuToggle.setAttribute('aria-label', 'Menü bezárása');
+  } else {
+    contentWrapper.classList.remove('shifted');
+    menuToggle.setAttribute('aria-label', 'Menü megnyitása');
+  }
+});
+    
   </script>
 </body>
 </html>

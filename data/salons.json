@@ -55,10 +55,22 @@
       },
       {
         "name": "FKNS Winter Circuit 2024 - Novi Sad",
-        "year": 2025,
-        "ids": ["FIAP 2025/646"],
+        "year": 2024,
+        "ids": ["FIAP 2024/646"],
         "country": "Szerbia"
       },
+      {
+        "name": "FKNS Winter Circuit 2024 - Aleksinac",
+        "year": 2024,
+        "ids": ["FIAP 2024/647"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "FKNS Winter Circuit 2024 - Kula",
+        "year": 2024,
+        "ids": ["FIAP 2024/648"],
+        "country": "Szerbia"
+      },      
       {
         "name": "Fotocult Circuit",
         "year": 2024,
@@ -134,7 +146,7 @@
       {
         "name": "XXIII. Pannónia Fotószalon",
         "year": 2024,
-        "ids": ["MAFISZ 2024/13"],
+        "ids": ["MAFOSZ 2024/13"],
         "country": "Magyarország"
       },
       {
@@ -154,5 +166,137 @@
         "year": 2025,
         "ids": ["FIAP 2025/221"],
         "country": "Montenegró"
+      },
+      {
+        "name": "V. Délvidék",
+        "year": 2025,
+        "ids": ["MAFOSZ 2025/01"],
+        "country": "Magyarország"
+      },
+      {
+        "name": "German International Photocup 2025 - Neckar",
+        "year": 2025,
+        "ids": ["FIAP 2025/063"],
+        "country": "Németország"
+      },
+      {
+        "name": "13th Greek Photographic Circuit 2025 - Santorine",
+        "year": 2025,
+        "ids": ["FIAP 2025/080"],
+        "country": "Görögország"
+      },
+      {
+        "name": "13th Greek Photographic Circuit 2025 - Rhodos",
+        "year": 2025,
+        "ids": ["FIAP 2025/082"],
+        "country": "Görögország"
+      },
+      {
+        "name": "Lisboa 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/114"],
+        "country": "Portugália"
+      },
+      {
+        "name": "Kula 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/176"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "10th Pannonia Reflectios",
+        "year": 2024,
+        "ids": ["FIAP 2024/040"],
+        "country": "Szlovénia"
+      },
+      {
+        "name": "Photographic Art Salon Bucharest",
+        "year": 2024,
+        "ids": ["FIAP 2024/308"],
+        "country": "Románia"
+      },
+      {
+        "name": "In The Light",
+        "year": 2024,
+        "ids": ["FIAP 2024/322"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "Frame the World",
+        "year": 2024,
+        "ids": ["FIAP 2024/445"],
+        "country": "Portugália"
+      },
+      {
+        "name": "41th Zagreb Salon",
+        "year": 2024,
+        "ids": ["FIAP 2024/333"],
+        "country": "Horvátország"
+      },
+      {
+        "name": "41th Zagreb Salon",
+        "year": 2024,
+        "ids": ["FIAP 2024/333"],
+        "country": "Horvátország"
+      },
+      {
+        "name": "Photo Salon Kumanovo 2024",
+        "year": 2024,
+        "ids": ["FIAP 2024/453"],
+        "country": "Észak-Macedónia"
+      },
+      {
+        "name": "PB Grand Exhibition 2024",
+        "year": 2024,
+        "ids": ["FIAP 2024/561"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "41th Zagreb Salon",
+        "year": 2024,
+        "ids": ["FIAP 2024/333"],
+        "country": "Horvátország"
+      },
+      {
+        "name": "7th Picturesque International Salon 2024",
+        "year": 2024,
+        "ids": ["FIAP 2024/670"],
+        "country": "India"
+      },
+      {
+        "name": "Narmada Circuit 2024",
+        "year": 2024,
+        "ids": ["FIAP 2024/562"],
+        "country": "India"
+      },
+      {
+        "name": "Narmada Circuit 2024",
+        "year": 2024,
+        "ids": ["FIAP 2024/563"],
+        "country": "India"
+      },
+      {
+        "name": "Narmada Circuit 2024",
+        "year": 2024,
+        "ids": ["FIAP 2024/564"],
+        "country": "India"
+      },
+      {
+        "name": "2nd International circuit Photo Trigger 2024: Cyprus",
+        "year": 2024,
+        "ids": ["FIAP 2024/665"],
+        "country": "Ciprus"
+      },
+      {
+        "name": "2nd International circuit Photo Trigger 2024: Morocco",
+        "year": 2024,
+        "ids": ["FIAP 2024/666"],
+        "country": "Marokkó"
+      },
+      {
+        "name": "2nd International circuit Photo Trigger 2024: Georgia",
+        "year": 2024,
+        "ids": ["FIAP 2024/664"],
+        "country": "Georgia"
       }
     ]
