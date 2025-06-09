@@ -1,10 +1,10 @@
 [
   {
-    "title": "Naplemente a Tiszán",
-    "models": ["Kovács Anna", "Szabó László"],
-    "note": "Ez a kép egy spontán pillanatot örökített meg.",
-    "tags": ["természet", "naplemente", "víz"],
-    "filename": "naplemente.jpg",
+    "title": "Forest cabin",
+    "models": ["Fenyvesi Luca"],
+    "note": "",
+    "tags": ["bw", "luca_szodliget_2024"],
+    "filename": "Forest cabin.jpg",
     "results": [
       {
         "contestName": "XXXI. Alföldi Fotószalon",
@@ -21,7 +21,7 @@
         "accepted": true,
         "awarded": true,
         "awardName": "Bronzérem",
-        "certificateImage": "bronz_naplemente.jpg"
+        "certificateImage": null
       }
     ]
   }
