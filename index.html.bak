@@ -1,38 +1,174 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8" />
-  <title>Fotópályázataim</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Fotópályázati galéria</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { display: flex; font-family: sans-serif; margin: 0; }
+    aside { width: 200px; padding: 1rem; background: #f0f0f0; }
+    main { flex-grow: 1; padding: 1rem; }
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+    .photo img { width: 100%; border-radius: 5px; }
+    .pagination { text-align: center; margin-top: 1rem; }
+    .tag { background: #eef; border-radius: 5px; padding: 0.2em 0.5em; margin: 0.2em; display: inline-block; }
+    .cert { max-width: 100%; margin-top: 5px; }
+    .album-button { display: block; margin: 0.3rem 0; cursor: pointer; }
+    .active-album { font-weight: bold; }
+  </style>
 </head>
 <body>
-  <h1>Fotópályázati galéria</h1>
-  <div id="gallery"></div>
+  <aside>
+    <h3>Albumok </h3>
+    <div id="album-list"></div>
+  </aside>
+  <main>
+    <input type="text" id="search" placeholder="Keresés cím, modell vagy pályázat szerint..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;">
+    <div id="gallery" class="photo-grid"></div>
+    <div class="pagination" id="pagination"></div>
+  </main>
 
   <script>
-    async function loadGallery() {
-      const response = await fetch('data/photos.json');
-      const photos = await response.json();
-      const gallery = document.getElementById('gallery');
+    const PAGE_SIZE = 6;
+    const albums = [
+      { name: "Összes", tags: [] },
+      { name: "Monokróm", tags: ["bw"] }
+    ];
 
-      photos.forEach(photo => {
-        const div = document.createElement('div');
-        div.className = 'photo';
+    let photos = [];
+    let filteredPhotos = [];
+    let currentPage = 1;
+    let currentAlbum = albums[0];
+    let searchTerm = "";
+    let salons = [];
 
-        div.innerHTML = `
-          <img src="images/${photo.filename}" alt="${photo.title}" />
-          <h2>${photo.title}</h2>
-          <ul>
-            ${photo.exhibitions.map(exh => `
-              <li><strong>${exh.year}</strong> – ${exh.name}: ${exh.result}</li>
-            `).join('')}
-          </ul>
-        `;
-        gallery.appendChild(div);
+    async function loadData() {
+        const [photosRes, salonsRes] = await Promise.all([
+            fetch("data/photos.json"),
+            fetch("data/salons.json")
+        ]);
+
+        photos = await photosRes.json();
+        salons = await salonsRes.json();
+        renderAlbums();
+        applyFilters();
+    }
+
+    function renderAlbums() {
+      const list = document.getElementById("album-list");
+      list.innerHTML = "";
+      albums.forEach((album, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = album.name;
+        btn.className = "album-button" + (i === 0 ? " active-album" : "");
+        btn.onclick = () => {
+          document.querySelectorAll(".album-button").forEach(b => b.classList.remove("active-album"));
+          btn.classList.add("active-album");
+          currentAlbum = album;
+          currentPage = 1;
+          applyFilters();
+        };
+        list.appendChild(btn);
       });
     }
 
-    loadGallery();
+    function applyFilters() {
+      filteredPhotos = photos.filter(photo => {
+        const matchesSearch = searchTerm === "" || (
+          photo.title.toLowerCase().includes(searchTerm) ||
+          (photo.models || []).some(m => m.toLowerCase().includes(searchTerm)) ||
+          (photo.results || []).some(r => r.contestName.toLowerCase().includes(searchTerm))
+        );
+
+        const matchesAlbum = currentAlbum.tags.length === 0 ||
+          currentAlbum.tags.some(tag => (photo.tags || []).includes(tag));
+
+        return matchesSearch && matchesAlbum;
+      });
+      renderGallery();
+    }
+
+    function renderGallery() {
+      const gallery = document.getElementById("gallery");
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const end = start + PAGE_SIZE;
+      const pagePhotos = filteredPhotos.slice(start, end);
+
+      gallery.innerHTML = "";
+
+      pagePhotos.forEach((photo, index) => {
+        const div = document.createElement("div");
+        div.className = "photo";
+
+        const detailsId = `details-${index}`;
+
+        div.innerHTML = `
+            <img src="images/${photo.filename}" alt="${photo.title}">
+            <h2>${photo.title}</h2>
+            ${Array.isArray(photo.models) && photo.models.length > 0 ? `<p><strong>Modellek:</strong> ${photo.models.join(', ')}</p>` : ""}
+            ${photo.note ? `<p><strong>Megjegyzés:</strong> ${photo.note}</p>` : ""}
+        <button onclick="toggleDetails('${detailsId}')">📄 Eredmények megtekintése</button>
+        <div id="${detailsId}" class="details" style="display: none;">
+<ul>
+  ${photo.results.map(r => {
+    const salon = findSalonById(r.id);
+    if (!salon) return "<li>❓ Ismeretlen verseny</li>";
+
+    return `
+      <li>
+        <strong>${salon.name}</strong> (${salon.country}, ${salon.year})
+        ${r.accepted ? "✅" : "❌"}
+        ${r.awarded ? `🏅 ${r.awardName || "Díjazott"}` : ""}
+        ${r.certificateImage ? `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>` : ""}
+      </li>
+    `;
+  }).join("")}
+</ul>
+        </div>`;
+        gallery.appendChild(div);
+    });
+
+
+      renderPagination();
+    }
+
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredPhotos.length / PAGE_SIZE);
+      const pagination = document.getElementById("pagination");
+      pagination.innerHTML = "";
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        if (i === currentPage) btn.disabled = true;
+        btn.onclick = () => {
+          currentPage = i;
+          renderGallery();
+        };
+        pagination.appendChild(btn);
+      }
+    }
+
+    document.getElementById("search").addEventListener("input", e => {
+      searchTerm = e.target.value.trim().toLowerCase();
+      currentPage = 1;
+      applyFilters();
+    });
+
+    loadData();
+    
+    function toggleDetails(id) {
+        const el = document.getElementById(id);
+        if (el.style.display === "none") {
+            el.style.display = "block";
+        } else {
+            el.style.display = "none";
+        }
+    }    
+    
+    function findSalonById(id) {
+        return salons.find(salon => salon.ids.includes(id));
+    }    
   </script>
 </body>
 </html>

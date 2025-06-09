@@ -19,7 +19,7 @@
 </head>
 <body>
   <aside>
-    <h3>Albumok</h3>
+    <h3>Albumok </h3>
     <div id="album-list"></div>
   </aside>
   <main>
@@ -32,9 +32,8 @@
     const PAGE_SIZE = 6;
     const albums = [
       { name: "Összes", tags: [] },
-      { name: "Természet", tags: ["természet", "tájkép"] },
-      { name: "Portrék", tags: ["portré", "ember"] },
-      { name: "Víz témák", tags: ["víz", "tó", "folyó"] }
+      { name: "Monokróm", tags: ["bw"] },
+      { name: "Színes", tags: ["color"] }
     ];
 
     let photos = [];
@@ -42,12 +41,18 @@
     let currentPage = 1;
     let currentAlbum = albums[0];
     let searchTerm = "";
+    let salons = [];
 
     async function loadData() {
-      const res = await fetch("data/photos.json");
-      photos = await res.json();
-      renderAlbums();
-      applyFilters();
+        const [photosRes, salonsRes] = await Promise.all([
+            fetch("data/photos.json"),
+            fetch("data/salons.json")
+        ]);
+
+        photos = await photosRes.json();
+        salons = await salonsRes.json();
+        renderAlbums();
+        applyFilters();
     }
 
     function renderAlbums() {
@@ -92,28 +97,38 @@
 
       gallery.innerHTML = "";
 
-      pagePhotos.forEach(photo => {
+      pagePhotos.forEach((photo, index) => {
         const div = document.createElement("div");
         div.className = "photo";
+
+        const detailsId = `details-${index}`;
+
         div.innerHTML = `
-          <img src="images/${photo.filename}" alt="${photo.title}">
-          <h2>${photo.title}</h2>
-          ${photo.models.length ? `<p><strong>Modellek:</strong> ${photo.models.join(', ')}</p>` : ""}
-          ${photo.note ? `<p><strong>Megjegyzés:</strong> ${photo.note}</p>` : ""}
-          <div>${photo.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
-          <ul>
-            ${photo.results.map(r => `
-              <li>
-                <strong>${r.contestName}</strong> (${r.country})
-                ${r.accepted ? "✅" : "❌"}
-                ${r.awarded ? `🏅 ${r.awardName || "Díjazott"}` : ""}
-                ${r.certificateImage ? `<br><img class="cert" src="images/certs/${r.certificateImage}" alt="Oklevél">` : ""}
-              </li>
-            `).join("")}
-          </ul>
-        `;
+            <img src="images/${photo.filename}" alt="${photo.title}">
+            <h2>${photo.title}</h2>
+            ${Array.isArray(photo.models) && photo.models.length > 0 ? `<p><strong>Modellek:</strong> ${photo.models.join(', ')}</p>` : ""}
+            ${photo.note ? `<p><strong>Megjegyzés:</strong> ${photo.note}</p>` : ""}
+        <button onclick="toggleDetails('${detailsId}')">📄 Eredmények megtekintése</button>
+        <div id="${detailsId}" class="details" style="display: none;">
+<ul>
+  ${photo.results.map(r => {
+    const salon = findSalonById(r.id);
+    if (!salon) return "<li>❓ Ismeretlen verseny</li>";
+
+    return `
+      <li>
+        <strong>${salon.name}</strong> (${salon.country}, ${salon.year})
+        ${r.accepted ? "✅" : "❌"}
+        ${r.awarded ? `🏅 ${r.awardName || "Díjazott"}` : ""}
+        ${r.certificateImage ? `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>` : ""}
+      </li>
+    `;
+  }).join("")}
+</ul>
+        </div>`;
         gallery.appendChild(div);
-      });
+    });
+
 
       renderPagination();
     }
@@ -142,6 +157,19 @@
     });
 
     loadData();
+    
+    function toggleDetails(id) {
+        const el = document.getElementById(id);
+        if (el.style.display === "none") {
+            el.style.display = "block";
+        } else {
+            el.style.display = "none";
+        }
+    }    
+    
+    function findSalonById(id) {
+        return salons.find(salon => salon.ids.includes(id));
+    }    
   </script>
 </body>
 </html>
