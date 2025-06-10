@@ -472,6 +472,35 @@
         "awarded": true,
         "awardName": "Honourable Mention",
         "certificateImage": "FIAP_2025_245/DPW SERBIA 2025 - Jozsef Dr. Smidla - F4 Valeria in the rain.jpg"
+      },
+      {
+        "id": "FIAP 2025/300",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "FIAP_2025_300/Jozsef Dr. Smidla (Hungary) - Valeria in the rain [B3].jpg"
+      }
+    ]
+  },
+  {
+    "title": "Together",
+    "models": ["Szentgyörgyi-Kozma Valéria", "Tuyet Chizu <a href=\" https://vero.co/tuyetchizu \">link</a>"],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Together.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/190",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "NPC Honourable Mention",
+        "certificateImage": "FIAP_2025_190/676.pdf"
+      },
+      {
+        "id": "FIAP 2025/111",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
       }
     ]
   }

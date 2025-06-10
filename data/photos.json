@@ -481,6 +481,88 @@
         "certificateImage": "FIAP_2025_300/Jozsef Dr. Smidla (Hungary) - Valeria in the rain [B3].jpg"
       }
     ]
+  },
+  {
+    "title": "Together",
+    "models": ["Szentgyörgyi-Kozma Valéria", "Tuyet Chizu <a href=\" https://vero.co/tuyetchizu \">link</a>"],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Together.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/190",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "NPC Honourable Mention",
+        "certificateImage": "FIAP_2025_190/676.pdf"
+      },
+      {
+        "id": "FIAP 2025/111",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/114",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/020",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/064",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/082",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/086",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/087",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "MAFOSZ 2025/01",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/176",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/221",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/245",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
   
 ]
