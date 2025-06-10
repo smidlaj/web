@@ -110,7 +110,13 @@
       {
         "name": "APJ International Salon 2025 - Print",
         "year": 2025,
-        "ids": ["FIAP 2025/012"],
+        "ids": ["FIAP 2025/012P"],
+        "country": "India"
+      },
+      {
+        "name": "APJ International Salon 2025 - Digital",
+        "year": 2025,
+        "ids": ["FIAP 2025/012D"],
         "country": "India"
       },
       {
@@ -168,21 +174,63 @@
         "country": "Montenegró"
       },
       {
+        "name": "Cacak Circuit 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/222"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "Cacak Circuit 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/223"],
+        "country": "Montenegró"
+      },
+      {
         "name": "V. Délvidék",
         "year": 2025,
         "ids": ["MAFOSZ 2025/01"],
         "country": "Magyarország"
       },
       {
-        "name": "German International Photocup 2025 - Neckar",
+        "name": "German International Photocup 2025 - Filder",
+        "year": 2025,
+        "ids": ["FIAP 2025/061"],
+        "country": "Németország"
+      },
+      {
+        "name": "German International Photocup 2025 - Kochertal",
+        "year": 2025,
+        "ids": ["FIAP 2025/062"],
+        "country": "Németország"
+      },
+      {
+        "name": "German International Photocup 2025 - Neckartal",
         "year": 2025,
         "ids": ["FIAP 2025/063"],
         "country": "Németország"
       },
       {
+        "name": "German International Photocup 2025 - Remstal",
+        "year": 2025,
+        "ids": ["FIAP 2025/064"],
+        "country": "Németország"
+      },
+      {
+        "name": "13th Greek Photographic Circuit 2025 - Crete",
+        "year": 2025,
+        "ids": ["FIAP 2025/079"],
+        "country": "Görögország"
+      },      
+      {
         "name": "13th Greek Photographic Circuit 2025 - Santorine",
         "year": 2025,
         "ids": ["FIAP 2025/080"],
+        "country": "Görögország"
+      },      
+      {
+        "name": "13th Greek Photographic Circuit 2025 - Mykonos",
+        "year": 2025,
+        "ids": ["FIAP 2025/081"],
         "country": "Görögország"
       },
       {
@@ -298,5 +346,71 @@
         "year": 2024,
         "ids": ["FIAP 2024/664"],
         "country": "Georgia"
+      },
+      {
+        "name": "Photo Star 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/075"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "6th Victory Circuit MLADOST",
+        "year": 2025,
+        "ids": ["FIAP 2025/088"],
+        "country": "Montenegró"
+      },
+      {
+        "name": "6th Victory Circuit CACAK",
+        "year": 2025,
+        "ids": ["FIAP 2025/087"],
+        "country": "Montenegró"
+      },
+      {
+        "name": "6th Victory Circuit PERASTO",
+        "year": 2025,
+        "ids": ["FIAP 2025/086"],
+        "country": "Montenegró"
+      },
+      {
+        "name": "Lens of creativity",
+        "year": 2025,
+        "ids": ["FIAP 2025/137"],
+        "country": "Moldova"
+      },
+      {
+        "name": "Managua 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/190"],
+        "country": "Nikaragua"
+      },
+      {
+        "name": "PhotoHouse Serbia 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/112"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "NSAPK 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/111"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "THE 13TH INTERNATIONAL PHOTO CONTEST IN VIETNAM 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/002"],
+        "country": "Vietnám"
+      },
+      {
+        "name": "PB Serbia 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/192"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "SWISS 2025 INTERNATIONAL PHOTO CONTEST",
+        "year": 2025,
+        "ids": ["FIAP 2025/260"],
+        "country": "Svájc"
       }
     ]
