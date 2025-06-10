@@ -3,11 +3,38 @@
     "title": "Forest cabin",
     "models": ["Fenyvesi Luca"],
     "note": "",
-    "tags": ["bw", "luca_szodliget_2024", "adult"],
+    "tags": ["bw", "luca_szodliget_2024", "adult", "awarded"],
     "filename": "Forest cabin.jpg",
     "results": [
       {
+        "id": "FIAP 2025/135",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "AAP Bronze",
+        "certificateImage": "FIAP_2025_135/FIAP_2025_135_572.pdf"
+      },
+      {
+        "id": "FIAP 2024/656",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "E-Certificate of Merit",
+        "certificateImage": "FIAP_2024_656/Forest_cabin_E-Certificate_of_Merit.jpeg"
+      },
+      {
+        "id": "FIAP 2025/012P",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "FIP Ribbon",
+        "certificateImage": "FIAP_2025_012/FIAP_2025_012_Forest cabin_FIP RIBBON.jpeg"
+      },    
+      {
         "id": "FIAP 2024/577",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },    
+      {
+        "id": "FIAP 2025/260",
         "accepted": true,
         "awarded": false,
         "awardName": null
@@ -55,13 +82,6 @@
         "certificateImage": null
       },
       {
-        "id": "FIAP 2024/656",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "E-Certificate of Merit",
-        "certificateImage": "FIAP_2024_656/Forest_cabin_E-Certificate_of_Merit.jpeg"
-      },
-      {
         "id": "FIAP 2025/101",
         "accepted": true,
         "awarded": false,
@@ -104,25 +124,11 @@
         "certificateImage": null
       },
       {
-        "id": "FIAP 2025/135",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "AAP Bronze",
-        "certificateImage": "FIAP_2025_135/FIAP_2025_135_572.pdf"
-      },
-      {
         "id": "FIAP 2025/032",
         "accepted": true,
         "awarded": false,
         "awardName": null,
         "certificateImage": null
-      },
-      {
-        "id": "FIAP 2025/012P",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "FIP Ribbon",
-        "certificateImage": "FIAP_2025_012/FIAP_2025_012_Forest cabin_FIP RIBBON.jpeg"
       },
       {
         "id": "FIAP 2025/175",
@@ -166,9 +172,37 @@
     "title": "Cat on the Couch",
     "models": ["Cupák"],
     "note": "",
-    "tags": ["color", "cat"],
+    "tags": ["color", "cat", "awarded"],
     "filename": "Cat on the couch.jpg",
     "results": [
+      {
+        "id": "FIAP 2025/012P",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "FIAP Gold",
+        "certificateImage": "FIAP_2025_012/FIAP_2025_012_Cat on the couch_FIAP GOLD.jpeg"
+      },
+      {
+        "id": "FIAP 2025/106",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Diploma PAC",
+        "certificateImage": "FIAP_2025_106/FIAP_2025_106_527.pdf"
+      },
+      {
+        "id": "FIAP 2024/650",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "FIAP Honourable Mention",
+        "certificateImage": ""
+      },
+      {
+        "id": "FIAP 2025/175",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "FIAP_2025_175/FIAP_2025_175_135.pdf"
+      },    
       {
         "id": "MAFOSZ 2024/13",
         "accepted": true,
@@ -212,38 +246,10 @@
         "awardName": null
       },
       {
-        "id": "FIAP 2025/106",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Diploma PAC",
-        "certificateImage": "FIAP_2025_106/FIAP_2025_106_527.pdf"
-      },
-      {
-        "id": "FIAP 2024/650",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "FIAP Honourable Mention",
-        "certificateImage": ""
-      },
-      {
         "id": "FIAP 2025/068",
         "accepted": true,
         "awarded": false,
         "awardName": null
-      },
-      {
-        "id": "FIAP 2025/012P",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "FIAP Gold",
-        "certificateImage": "FIAP_2025_012/FIAP_2025_012_Cat on the couch_FIAP GOLD.jpeg"
-      },
-      {
-        "id": "FIAP 2025/175",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Salon Honourable Mention",
-        "certificateImage": "FIAP_2025_175/FIAP_2025_175_135.pdf"
       },
       {
         "id": "FIAP 2025/209",
@@ -276,9 +282,51 @@
     "title": "Marilyn with cigarette",
     "models": ["Szentgyörgyi-Kozma Valéria"],
     "note": "",
-    "tags": ["color", "portrait", "marilyn"],
+    "tags": ["color", "portrait", "marilyn", "awarded"],
     "filename": "Marilyn with cigarette.jpg",
     "results": [
+      {
+        "id": "FIAP 2024/649",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Bronze",
+        "certificateImage": "FIAP_2024_649/PHOTOHOUSE DIGITAL 2024 - A3 Certificate.jpg"
+      },
+      {
+        "id": "FIAP 2024/648",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "FIAP_2024_646/FKNS WINTER CIRCUIT 2024 - Kula - Jozsef Dr. Smidla - C3 Marilyn with cigarette.jpg"
+      },
+      {
+        "id": "FIAP 2025/031",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "FIAP_2025_031/PBNS 2025 - D2 Certificate.jpg"
+      },
+      {
+        "id": "FIAP 2025/032",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "FIAP_2025_032/FKA WINTER 2025 - Jozsef Dr. Smidla - D2 Marilyn with cigarette.jpg"
+      },
+      {
+        "id": "FIAP 2025/176",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "FIAP_2025_176/KULA 2025 - Jozsef Dr. Smidla - C3 Marilyn with cigarette.jpg"
+      },
+      {
+        "id": "FIAP 2025/245",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "FIAP_2025_245/DPW SERBIA 2025 - Jozsef Dr. Smidla - C2 Marilyn with cigarette.jpg"
+      },    
       {
         "id": "MAFOSZ 2025/01",
         "accepted": true,
@@ -316,52 +364,10 @@
         "awardName": null
       },
       {
-        "id": "FIAP 2024/649",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Salon Bronze",
-        "certificateImage": "FIAP_2024_649/PHOTOHOUSE DIGITAL 2024 - A3 Certificate.jpg"
-      },
-      {
-        "id": "FIAP 2024/648",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Salon Honourable Mention",
-        "certificateImage": "FIAP_2024_646/FKNS WINTER CIRCUIT 2024 - Kula - Jozsef Dr. Smidla - C3 Marilyn with cigarette.jpg"
-      },
-      {
-        "id": "FIAP 2025/031",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Salon Honourable Mention",
-        "certificateImage": "FIAP_2025_031/PBNS 2025 - D2 Certificate.jpg"
-      },
-      {
         "id": "FIAP 2025/114",
         "accepted": true,
         "awarded": false,
         "awardName": null
-      },
-      {
-        "id": "FIAP 2025/032",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Honourable Mention",
-        "certificateImage": "FIAP_2025_032/FKA WINTER 2025 - Jozsef Dr. Smidla - D2 Marilyn with cigarette.jpg"
-      },
-      {
-        "id": "FIAP 2025/176",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Honourable Mention",
-        "certificateImage": "FIAP_2025_176/KULA 2025 - Jozsef Dr. Smidla - C3 Marilyn with cigarette.jpg"
-      },
-      {
-        "id": "FIAP 2025/245",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Honourable Mention",
-        "certificateImage": "FIAP_2025_245/DPW SERBIA 2025 - Jozsef Dr. Smidla - C2 Marilyn with cigarette.jpg"
       },
       {
         "id": "FIAP 2025/300",
@@ -381,9 +387,51 @@
     "title": "Valeria in the rain",
     "models": ["Szentgyörgyi-Kozma Valéria"],
     "note": "",
-    "tags": ["bw", "adult"],
+    "tags": ["bw", "adult", "awarded"],
     "filename": "Valeria in the rain.jpg",
     "results": [
+      {
+        "id": "FIAP 2025/221",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "PC PERASTO Gold medal",
+        "certificateImage": "FIAP_2025_221/B4-Valeria.in.the.rain-CACAK.CIRCUIT.2025-Salon.PERASTO-Award.jpg"
+      },    
+      {
+        "id": "FIAP 2025/245",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "FIAP_2025_245/DPW SERBIA 2025 - Jozsef Dr. Smidla - F4 Valeria in the rain.jpg"
+      },
+      {
+        "id": "FIAP 2025/300",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "FIAP_2025_300/Jozsef Dr. Smidla (Hungary) - Valeria in the rain [B3].jpg"
+      },
+      {
+        "id": "FIAP 2025/062",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": ""
+      },
+      {
+        "id": "FIAP 2025/222",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "FIAP_2025_221/B4-Valeria.in.the.rain-CACAK.CIRCUIT.2025-Salon.CACAK-Award.jpg"
+      },
+      {
+        "id": "FIAP 2025/176",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "FIAP_2025_176/KULA 2025 - Jozsef Dr. Smidla - F4 Valeria in the rain.jpg"
+      },    
       {
         "id": "FIAP 2025/112",
         "accepted": true,
@@ -401,13 +449,6 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      },
-      {
-        "id": "FIAP 2025/062",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Honourable Mention",
-        "certificateImage": ""
       },
       {
         "id": "FIAP 2025/064",
@@ -428,31 +469,10 @@
         "awardName": null
       },
       {
-        "id": "FIAP 2025/176",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Honourable Mention",
-        "certificateImage": "FIAP_2025_176/KULA 2025 - Jozsef Dr. Smidla - F4 Valeria in the rain.jpg"
-      },
-      {
         "id": "FIAP 2025/209",
         "accepted": true,
         "awarded": false,
         "awardName": null
-      },
-      {
-        "id": "FIAP 2025/221",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "PC PERASTO Gold medal",
-        "certificateImage": "FIAP_2025_221/B4-Valeria.in.the.rain-CACAK.CIRCUIT.2025-Salon.PERASTO-Award.jpg"
-      },
-      {
-        "id": "FIAP 2025/222",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Honourable Mention",
-        "certificateImage": "FIAP_2025_221/B4-Valeria.in.the.rain-CACAK.CIRCUIT.2025-Salon.CACAK-Award.jpg"
       },
       {
         "id": "FIAP 2025/223",
@@ -465,20 +485,6 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      },
-      {
-        "id": "FIAP 2025/245",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Honourable Mention",
-        "certificateImage": "FIAP_2025_245/DPW SERBIA 2025 - Jozsef Dr. Smidla - F4 Valeria in the rain.jpg"
-      },
-      {
-        "id": "FIAP 2025/300",
-        "accepted": true,
-        "awarded": true,
-        "awardName": "Salon Honourable Mention",
-        "certificateImage": "FIAP_2025_300/Jozsef Dr. Smidla (Hungary) - Valeria in the rain [B3].jpg"
       }
     ]
   },
@@ -486,7 +492,7 @@
     "title": "Together",
     "models": ["Szentgyörgyi-Kozma Valéria", "Tuyet Chizu <a href=\" https://vero.co/tuyetchizu \">link</a>"],
     "note": "",
-    "tags": ["bw", "adult"],
+    "tags": ["bw", "adult", "awarded"],
     "filename": "Together.jpg",
     "results": [
       {

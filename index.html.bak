@@ -37,6 +37,7 @@
     const PAGE_SIZE = 6;
     const albums = [
       { name: "Összes", tags: [] },
+      { name: "Díjazottak", tags: ["awarded"] },
       { name: "Monokróm", tags: ["bw"] },
       { name: "Színes", tags: ["color"] },
       { name: "Marilyn", tags: ["marilyn"] }
@@ -183,11 +184,6 @@ function applyFilters() {
         return salons.find(salon => salon.ids.includes(id));
     }
     
-    document.getElementById("menu-toggle").addEventListener("click", () => {
-        const aside = document.querySelector("aside");
-        aside.classList.toggle("open");
-    });
-
 const menuToggle = document.getElementById('menu-toggle');
 const aside = document.querySelector('aside');
 const contentWrapper = document.getElementById('content-wrapper');

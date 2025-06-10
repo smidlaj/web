@@ -37,6 +37,7 @@
     const PAGE_SIZE = 6;
     const albums = [
       { name: "Összes", tags: [] },
+      { name: "Díjazottak", tags: ["awarded"] },
       { name: "Monokróm", tags: ["bw"] },
       { name: "Színes", tags: ["color"] },
       { name: "Marilyn", tags: ["marilyn"] }
@@ -131,7 +132,7 @@ function applyFilters() {
       <li>
         <strong>${salon.name}</strong> (${salon.country}, ${salon.year})
         ${r.accepted ? "✅" : "❌"}
-        ${r.awarded ? `🏅 ${r.awardName || "Díjazott"}` : ""}
+        ${r.awarded ? `🏅` : ""}
         ${r.certificateImage ? `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>` : ""}
       </li>
     `;
