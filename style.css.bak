@@ -157,6 +157,7 @@ h1 {
   }
 
   #content-wrapper {
+    padding-top: 3.5rem;
     transition: transform 0.3s ease;
   }
 
