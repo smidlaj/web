@@ -86,8 +86,17 @@ function getRandomIndex() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  window.isAdult = null;  // alapértelmezett
-  showAgeVerificationDialog();
+  const savedAgeStatus = localStorage.getItem("ageVerified");
+  if (savedAgeStatus === "yes") {
+    window.isAdult = true;
+    applyFilters();
+  } else if (savedAgeStatus === "no") {
+    window.isAdult = false;
+    applyFilters();
+  } else {
+    window.isAdult = null;
+    showAgeVerificationDialog();
+  }
 });
 
 function showAgeVerificationDialog() {
@@ -120,12 +129,14 @@ function showAgeVerificationDialog() {
 
   document.getElementById('btnYes').onclick = () => {
     window.isAdult = true;
+    localStorage.setItem("ageVerified", "yes");
     document.body.removeChild(modal);
     applyFilters();
   };
 
   document.getElementById('btnNo').onclick = () => {
     window.isAdult = false;
+    localStorage.setItem("ageVerified", "no");
     document.body.removeChild(modal);
     applyFilters();
   };

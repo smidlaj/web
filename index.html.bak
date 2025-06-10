@@ -44,7 +44,7 @@
 
 
   <script>
-    const PAGE_SIZE = 6;
+    const PAGE_SIZE = 10;
     const albums = [
       { name: "Összes", tags: [] },
       { name: "Díjazottak", tags: ["awarded"] },
@@ -86,8 +86,17 @@ function getRandomIndex() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  window.isAdult = null;  // alapértelmezett
-  showAgeVerificationDialog();
+  const savedAgeStatus = localStorage.getItem("ageVerified");
+  if (savedAgeStatus === "yes") {
+    window.isAdult = true;
+    applyFilters();
+  } else if (savedAgeStatus === "no") {
+    window.isAdult = false;
+    applyFilters();
+  } else {
+    window.isAdult = null;
+    showAgeVerificationDialog();
+  }
 });
 
 function showAgeVerificationDialog() {
