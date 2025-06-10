@@ -54,7 +54,7 @@
     ];
 
     const dialogs = [
-        "Figyelem a galéria egyes képei förtelmes, erkölcstelen tartalmak - meztelenség - is látható. Elmúltál már 18?",
+        "Figyelem a galéria egyes képein förtelmes, erkölcstelen tartalmak - meztelenség - is látható. Elmúltál már 18?",
         "Itt egyes képeken meztelenség is megjelenik. Cserkészbecsszó, hogy elmúltál már 18?",
         "Ha apácazárdában dolgozol, vagy a munkahelyeden vagy, akkor a következő galéria nézegetése kínos perceket okozhat. Bevállalod?"
     ];
@@ -220,7 +220,7 @@ function applyFilters() {
       <li>
         <strong>${salon.name}</strong> (${salon.country}, ${salon.year})
         ${r.accepted ? "✅" : "❌"}
-        ${r.awarded ? `🏅` : ""}
+        ${r.awarded ? `🏅` : ${r.certificateImage ? "" : r.awardName}}
         ${r.certificateImage ? `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>` : ""}
       </li>
     `;

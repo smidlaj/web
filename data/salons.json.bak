@@ -406,5 +406,11 @@
         "year": 2025,
         "ids": ["FIAP 2025/192"],
         "country": "Szerbia"
+      },
+      {
+        "name": "SWISS 2025 INTERNATIONAL PHOTO CONTEST",
+        "year": 2025,
+        "ids": ["FIAP 2025/260"],
+        "country": "Svájc"
       }
     ]

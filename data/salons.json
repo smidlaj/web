@@ -412,5 +412,11 @@
         "year": 2025,
         "ids": ["FIAP 2025/260"],
         "country": "Svájc"
+      },
+      {
+        "name": "I. Pillanatok Varázsa Fotópályázat",
+        "year": 2025,
+        "ids": ["MFSZE 2025/01"],
+        "country": "Magyarország"
       }
     ]

@@ -34,7 +34,7 @@
         "awardName": null
       },    
       {
-        "id": "FIAP 2024/260",
+        "id": "FIAP 2025/260",
         "accepted": true,
         "awarded": false,
         "awardName": null
@@ -558,6 +558,97 @@
       },
       {
         "id": "FIAP 2025/221",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/245",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Balance",
+    "models": ["Dorothea <a href=\" https://www.instagram.com/dorothea_giftofgod?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw== \">link</a>"],
+    "note": "",
+    "tags": ["color", "adult", "awarded"],
+    "filename": "Balance.jpg",
+    "results": [
+      {
+        "id": "MFSZE 2025/01",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "I. hely, aranyérem",
+        "certificateImage": ""
+      },
+      {
+        "id": "FIAP 2024/561",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention ribbon",
+        "certificateImage": "FIAP_2024_561/PB GRAND EXHIBITION 2024 - E1 Certificate.jpg"
+      },
+      {
+        "id": "FIAP 2024/445",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Diploma",
+        "certificateImage": "FIAP_2024_445/József Dr. Smidla (Hungary) - Balance [A1].jpg"
+      },
+      {
+        "id": "FIAP 2025/112",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "FIAP_2025_112/PHOTOHOUSE SERBIA 2025 - Jozsef Dr. Smidla - E1 Balance.jpg"
+      },
+      {
+        "id": "FIAP 2024/300",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/322",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/333",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/111",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/137",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/260",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/221",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/223",
         "accepted": true,
         "awarded": false,
         "awardName": null

@@ -216,12 +216,21 @@ function applyFilters() {
     const salon = findSalonById(r.id);
     if (!salon) return "<li>❓ Ismeretlen verseny</li>";
 
+    let awardPart = "";
+    if (r.awarded) {
+      awardPart = "🏅";
+      if (r.certificateImage) {
+        awardPart += `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>`;
+      } else if (r.awardName) {
+        awardPart += ` ${r.awardName}`;
+      }
+    }
+
     return `
       <li>
         <strong>${salon.name}</strong> (${salon.country}, ${salon.year})
         ${r.accepted ? "✅" : "❌"}
-        ${r.awarded ? `🏅` : ""}
-        ${r.certificateImage ? `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>` : ""}
+        ${awardPart}
       </li>
     `;
   }).join("")}
