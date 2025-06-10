@@ -175,15 +175,17 @@ function applyFilters() {
   if (!isPhotoVisible(photo)) {
         return false;
   }
-    const matchesSearch =
-      searchTerm === "" || (
-        photo.title.toLowerCase().includes(searchTerm) ||
-        (photo.models || []).some(m => m.toLowerCase().includes(searchTerm)) ||
-        (photo.results || []).some(r => {
-          const salon = findSalonById(r.id);
-          return salon && salon.name.toLowerCase().includes(searchTerm);
-        })
-      );
+const matchesSearch =
+  searchTerm === "" ||
+  photo.title.toLowerCase().includes(searchTerm) ||
+  (photo.models || []).some(id => {
+    const model = findModelById(id);
+    return model && model.name.toLowerCase().includes(searchTerm);
+  }) ||
+  (photo.results || []).some(r => {
+    const salon = findSalonById(r.id);
+    return salon && salon.name.toLowerCase().includes(searchTerm);
+  });
 
     const matchesAlbum =
       currentAlbum.tags.length === 0 ||

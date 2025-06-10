@@ -1,7 +1,7 @@
 [
   {
     "title": "Forest cabin",
-    "models": ["Fenyvesi Luca"],
+    "models": ["lucfenyo"],
     "note": "",
     "tags": ["bw", "luca_szodliget_2024", "adult", "awarded"],
     "filename": "Forest cabin.jpg",
@@ -89,7 +89,7 @@
         "certificateImage": null
       },
       {
-        "id": "FIAP 2025/646",
+        "id": "FIAP 2024/646",
         "accepted": true,
         "awarded": false,
         "awardName": null,
@@ -170,7 +170,7 @@
 
   {
     "title": "Cat on the Couch",
-    "models": ["Cupák"],
+    "models": ["cupak"],
     "note": "",
     "tags": ["color", "cat", "awarded"],
     "filename": "Cat on the couch.jpg",
@@ -280,7 +280,7 @@
   },
   {
     "title": "Marilyn with cigarette",
-    "models": ["Szentgyörgyi-Kozma Valéria"],
+    "models": ["vali"],
     "note": "",
     "tags": ["color", "portrait", "marilyn", "awarded"],
     "filename": "Marilyn with cigarette.jpg",
@@ -385,7 +385,7 @@
   },
   {
     "title": "Valeria in the rain",
-    "models": ["Szentgyörgyi-Kozma Valéria"],
+    "models": ["vali"],
     "note": "",
     "tags": ["bw", "adult", "awarded"],
     "filename": "Valeria in the rain.jpg",
@@ -481,7 +481,7 @@
         "awardName": null
       },
       {
-        "id": "FIAP 2025/202",
+        "id": "FIAP 2025/020",
         "accepted": true,
         "awarded": false,
         "awardName": null
@@ -655,6 +655,82 @@
       },
       {
         "id": "FIAP 2025/245",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Dressing table",
+    "models": ["vali"],
+    "note": "",
+    "tags": ["color", "portrait", "marilyn", "awarded"],
+    "filename": "Dressing table.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/649",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention ribbon",
+        "certificateImage": "FIAP_2024_649/PHOTOHOUSE DIGITAL 2024 - Jozsef Dr. Smidla - B2 Dressing table.jpg"
+      },
+      {
+        "id": "FIAP 2024/666",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/564",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/563",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/031",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/650",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/063",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/032",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/012P",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/175",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/646",
         "accepted": true,
         "awarded": false,
         "awardName": null
