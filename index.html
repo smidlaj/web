@@ -78,6 +78,7 @@
     let currentAlbum = albums[0];
     let searchTerm = "";
     let salons = [];
+    let models = [];
     window.isAdult = null;
 
 function getRandomIndex() {
@@ -131,13 +132,15 @@ function showAgeVerificationDialog() {
 }
 
     async function loadData() {
-        const [photosRes, salonsRes] = await Promise.all([
+        const [photosRes, salonsRes, modelsRes] = await Promise.all([
             fetch("data/photos.json"),
-            fetch("data/salons.json")
+            fetch("data/salons.json"),
+            fetch("data/models.json")
         ]);
 
         photos = await photosRes.json();
         salons = await salonsRes.json();
+        models = await modelsRes.json();
         renderAlbums();
         applyFilters();
     }
@@ -169,16 +172,20 @@ function applyFilters() {
   if (window.isAdult === false && (photo.tags || []).includes('adult')) {
       return false;
     }
-  
-    const matchesSearch =
-      searchTerm === "" || (
-        photo.title.toLowerCase().includes(searchTerm) ||
-        (photo.models || []).some(m => m.toLowerCase().includes(searchTerm)) ||
-        (photo.results || []).some(r => {
-          const salon = findSalonById(r.id);
-          return salon && salon.name.toLowerCase().includes(searchTerm);
-        })
-      );
+  if (!isPhotoVisible(photo)) {
+        return false;
+  }
+const matchesSearch =
+  searchTerm === "" ||
+  photo.title.toLowerCase().includes(searchTerm) ||
+  (photo.models || []).some(id => {
+    const model = findModelById(id);
+    return model && model.name.toLowerCase().includes(searchTerm);
+  }) ||
+  (photo.results || []).some(r => {
+    const salon = findSalonById(r.id);
+    return salon && salon.name.toLowerCase().includes(searchTerm);
+  });
 
     const matchesAlbum =
       currentAlbum.tags.length === 0 ||
@@ -189,6 +196,26 @@ function applyFilters() {
 
   renderGallery();
 }
+
+    function isPhotoVisible(photo) {
+        if (!Array.isArray(photo.models)) return true;
+
+        for (const id of photo.models) {
+            const model = findModelById(id);
+            if (!model) continue;
+
+            if (!model.visible) {
+                return false;
+            }
+
+            if ((photo.tags || []).includes("adult") && model.adultVisible === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
     function renderGallery() {
       const gallery = document.getElementById("gallery");
@@ -207,7 +234,26 @@ function applyFilters() {
         div.innerHTML = `
             <img src="images/${photo.filename}" alt="${photo.title}">
             <h2>${photo.title}</h2>
-            ${Array.isArray(photo.models) && photo.models.length > 0 ? `<p><strong>Modellek:</strong> ${photo.models.join(', ')}</p>` : ""}
+            
+            <!-- modellek -->
+            ${Array.isArray(photo.models) && photo.models.length > 0 ? `
+             <p><strong>Modellek:</strong> ${
+                photo.models
+                .map(id => {
+                    const model = findModelById(id);
+
+                    let namePart = model.name;
+                    if (model.links && model.links.length > 0) {
+                        const linksHtml = model.links.map(link => `<a href="${link}" target="_blank">🔗</a>`).join(" ");
+                        namePart += ` ${linksHtml}`;
+                    }
+                    return namePart;
+                })
+            .filter(Boolean)
+            .join(', ')
+            }</p>
+            ` : ""}            
+            
             ${photo.note ? `<p><strong>Megjegyzés:</strong> ${photo.note}</p>` : ""}
         <button onclick="toggleDetails('${detailsId}')">📄 Eredmények megtekintése</button>
         <div id="${detailsId}" class="details" style="display: none;">
@@ -280,6 +326,10 @@ function applyFilters() {
     function findSalonById(id) {
         return salons.find(salon => salon.ids.includes(id));
     }
+    
+    function findModelById(id) {
+        return models.find(model => model.id === id);
+    }    
     
 const menuToggle = document.getElementById('menu-toggle');
 const aside = document.querySelector('aside');

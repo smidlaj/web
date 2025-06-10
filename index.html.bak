@@ -78,6 +78,7 @@
     let currentAlbum = albums[0];
     let searchTerm = "";
     let salons = [];
+    let models = [];
     window.isAdult = null;
 
 function getRandomIndex() {
@@ -131,13 +132,15 @@ function showAgeVerificationDialog() {
 }
 
     async function loadData() {
-        const [photosRes, salonsRes] = await Promise.all([
+        const [photosRes, salonsRes, modelsRes] = await Promise.all([
             fetch("data/photos.json"),
-            fetch("data/salons.json")
+            fetch("data/salons.json"),
+            fetch("data/models.json")
         ]);
 
         photos = await photosRes.json();
         salons = await salonsRes.json();
+        models = await modelsRes.json();
         renderAlbums();
         applyFilters();
     }
@@ -169,7 +172,9 @@ function applyFilters() {
   if (window.isAdult === false && (photo.tags || []).includes('adult')) {
       return false;
     }
-  
+  if (!isPhotoVisible(photo)) {
+        return false;
+  }
     const matchesSearch =
       searchTerm === "" || (
         photo.title.toLowerCase().includes(searchTerm) ||
@@ -190,6 +195,26 @@ function applyFilters() {
   renderGallery();
 }
 
+    function isPhotoVisible(photo) {
+        if (!Array.isArray(photo.models)) return true;
+
+        for (const id of photo.models) {
+            const model = findModelById(id);
+            if (!model) continue;
+
+            if (!model.visible) {
+                return false;
+            }
+
+            if ((photo.tags || []).includes("adult") && model.adultVisible === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
     function renderGallery() {
       const gallery = document.getElementById("gallery");
       const start = (currentPage - 1) * PAGE_SIZE;
@@ -207,7 +232,26 @@ function applyFilters() {
         div.innerHTML = `
             <img src="images/${photo.filename}" alt="${photo.title}">
             <h2>${photo.title}</h2>
-            ${Array.isArray(photo.models) && photo.models.length > 0 ? `<p><strong>Modellek:</strong> ${photo.models.join(', ')}</p>` : ""}
+            
+            <!-- modellek -->
+            ${Array.isArray(photo.models) && photo.models.length > 0 ? `
+             <p><strong>Modellek:</strong> ${
+                photo.models
+                .map(id => {
+                    const model = findModelById(id);
+
+                    let namePart = model.name;
+                    if (model.links && model.links.length > 0) {
+                        const linksHtml = model.links.map(link => `<a href="${link}" target="_blank">🔗</a>`).join(" ");
+                        namePart += ` ${linksHtml}`;
+                    }
+                    return namePart;
+                })
+            .filter(Boolean)
+            .join(', ')
+            }</p>
+            ` : ""}            
+            
             ${photo.note ? `<p><strong>Megjegyzés:</strong> ${photo.note}</p>` : ""}
         <button onclick="toggleDetails('${detailsId}')">📄 Eredmények megtekintése</button>
         <div id="${detailsId}" class="details" style="display: none;">
@@ -216,12 +260,21 @@ function applyFilters() {
     const salon = findSalonById(r.id);
     if (!salon) return "<li>❓ Ismeretlen verseny</li>";
 
+    let awardPart = "";
+    if (r.awarded) {
+      awardPart = "🏅";
+      if (r.certificateImage) {
+        awardPart += `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>`;
+      } else if (r.awardName) {
+        awardPart += ` ${r.awardName}`;
+      }
+    }
+
     return `
       <li>
         <strong>${salon.name}</strong> (${salon.country}, ${salon.year})
         ${r.accepted ? "✅" : "❌"}
-        ${r.awarded ? `🏅` : ${r.certificateImage ? "" : r.awardName}}
-        ${r.certificateImage ? `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>` : ""}
+        ${awardPart}
       </li>
     `;
   }).join("")}
@@ -271,6 +324,10 @@ function applyFilters() {
     function findSalonById(id) {
         return salons.find(salon => salon.ids.includes(id));
     }
+    
+    function findModelById(id) {
+        return models.find(model => model.id === id);
+    }    
     
 const menuToggle = document.getElementById('menu-toggle');
 const aside = document.querySelector('aside');

@@ -1,7 +1,7 @@
 [
   {
     "title": "Forest cabin",
-    "models": ["Fenyvesi Luca"],
+    "models": ["lucfenyo"],
     "note": "",
     "tags": ["bw", "luca_szodliget_2024", "adult", "awarded"],
     "filename": "Forest cabin.jpg",
@@ -170,7 +170,7 @@
 
   {
     "title": "Cat on the Couch",
-    "models": ["Cupák"],
+    "models": ["cupak"],
     "note": "",
     "tags": ["color", "cat", "awarded"],
     "filename": "Cat on the couch.jpg",
@@ -280,7 +280,7 @@
   },
   {
     "title": "Marilyn with cigarette",
-    "models": ["Szentgyörgyi-Kozma Valéria"],
+    "models": ["vali"],
     "note": "",
     "tags": ["color", "portrait", "marilyn", "awarded"],
     "filename": "Marilyn with cigarette.jpg",
@@ -385,7 +385,7 @@
   },
   {
     "title": "Valeria in the rain",
-    "models": ["Szentgyörgyi-Kozma Valéria"],
+    "models": ["vali"],
     "note": "",
     "tags": ["bw", "adult", "awarded"],
     "filename": "Valeria in the rain.jpg",
@@ -490,7 +490,7 @@
   },
   {
     "title": "Together",
-    "models": ["Szentgyörgyi-Kozma Valéria", "Tuyet Chizu <a target=\"_blank\" href=\" https://vero.co/tuyetchizu \">link</a>"],
+    "models": ["vali", "chizu"],
     "note": "",
     "tags": ["bw", "adult", "awarded"],
     "filename": "Together.jpg",
@@ -572,7 +572,7 @@
   },
   {
     "title": "Balance",
-    "models": ["Dorothea <a  target=\"_blank\" href=\" https://www.instagram.com/dorothea_giftofgod?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw== \">link</a>"],
+    "models": ["dorothea"],
     "note": "",
     "tags": ["color", "adult", "awarded"],
     "filename": "Balance.jpg",

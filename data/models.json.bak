@@ -1,0 +1,38 @@
+[
+    {
+        "id": "lucfenyo",
+        "name": "Fenyvesi Luca",
+        "links": [],
+        "adultVisible": true,
+        "visible": true
+    },
+    {
+        "id": "vali",
+        "name": "Szentgyörgyi-Kozma Valéria",
+        "links": [],
+        "adultVisible": false,
+        "visible": true
+    },
+    {
+        "id": "chizu",
+        "name": "Tuyet Chizu",
+        "links": ["https://vero.co/tuyetchizu"],
+        "adultVisible": true,
+        "visible": true
+    },
+    {
+        "id": "dorothea",
+        "name": "Dorothea",
+        "links": ["https://www.instagram.com/dorothea_giftofgod?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="],
+        "adultVisible": true,
+        "visible": true
+    },
+    {
+        "id": "cupak",
+        "name": "Cupák",
+        "links": [],
+        "adultVisible": true,
+        "visible": true
+    }
+    
+]
