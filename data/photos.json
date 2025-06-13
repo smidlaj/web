@@ -846,6 +846,45 @@
         "awardName": null
       }
     ]
-  } 
+  },
+  {
+    "title": "Girl with umbrella",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["color", "luca_szodliget_2024", "adult"],
+    "filename": "Girl with umbrella.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/603",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/445",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/614",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/333",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/020",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  }
 
 ]
