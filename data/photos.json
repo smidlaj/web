@@ -801,6 +801,51 @@
         "awardName": null
       }
     ]
-  }
-  
+  },
+  {
+    "title": "Layers of Vulnerability",
+    "models": ["vali"],
+    "note": "",
+    "tags": ["color", "marilyn", "adult"],
+    "filename": "Layers of Vulnerability.jpg",
+    "results": [
+      {
+        "id": "MAFOSZ 2025/01",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/111",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/031",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/274",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/032",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/245",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  } 
+
 ]
