@@ -885,6 +885,55 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "Marilyn with bubbles",
+    "models": ["vali"],
+    "note": "",
+    "tags": ["bw", "marilyn", "portrait", "awarded"],
+    "filename": "Marilyn with bubbles.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/646",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "FIAP Honourable Mention",
+        "certificateImage": "FIAP_2024_646/FKNS WINTER CIRCUIT 2024 - Novi Sad - C2 Certificate.jpg"
+      },
+      {
+        "id": "FIAP 2024/647",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "FIAP_2024_646/FKNS WINTER CIRCUIT 2024 - Aleksinac - C2 Certificate.jpg"
+      },
+      {
+        "id": "FIAP 2025/112",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Honourable Mention",
+        "certificateImage": "FIAP_2025_112/PHOTOHOUSE SERBIA 2025 - Jozsef Dr. Smidla - C3 Marilyn with bubbles.jpg"
+      },
+      {
+        "id": "FIAP 2025/063",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Salon Certificate",
+        "certificateImage": ""
+      },
+      {
+        "id": "FIAP 2025/002",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/192",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
