@@ -890,7 +890,7 @@
     "title": "Marilyn with bubbles",
     "models": ["vali"],
     "note": "",
-    "tags": ["bw", "marilyn", "portrait", "awarded"],
+    "tags": ["color", "marilyn", "portrait", "awarded"],
     "filename": "Marilyn with bubbles.jpg",
     "results": [
       {
@@ -929,6 +929,46 @@
       },
       {
         "id": "FIAP 2025/192",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Lying woman with fan",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["bw", "adult", "luca_szodliget_2024", "awarded"],
+    "filename": "Lying woman with fan.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/101",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "FIP Ribbon",
+        "certificateImage": "FIAP_2025_101/JOZSEF DR. SMIDLA_1_49_05_02.JPG"
+      },
+      {
+        "id": "FIAP 2024/666",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/656",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/646",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/012P",
         "accepted": true,
         "awarded": false,
         "awardName": null
