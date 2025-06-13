@@ -1,46 +1,84 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fotópályázati galéria</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    body { display: flex; font-family: sans-serif; margin: 0; }
-    aside { width: 200px; padding: 1rem; background: #f0f0f0; }
-    main { flex-grow: 1; padding: 1rem; }
-    .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
-    .photo img { width: 100%; border-radius: 5px; }
-    .pagination { text-align: center; margin-top: 1rem; }
-    .tag { background: #eef; border-radius: 5px; padding: 0.2em 0.5em; margin: 0.2em; display: inline-block; }
-    .cert { max-width: 100%; margin-top: 5px; }
-    .album-button { display: block; margin: 0.3rem 0; cursor: pointer; }
-    .active-album { font-weight: bold; }
+    body {
+      display: flex;
+      font-family: sans-serif;
+      margin: 0;
+    }
+
+    aside {
+      width: 200px;
+      padding: 1rem;
+      background: #f0f0f0;
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 1rem;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .photo img {
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      background: #eef;
+      border-radius: 5px;
+      padding: 0.2em 0.5em;
+      margin: 0.2em;
+      display: inline-block;
+    }
+
+    .cert {
+      max-width: 100%;
+      margin-top: 5px;
+    }
+
+    .album-button {
+      display: block;
+      margin: 0.3rem 0;
+      cursor: pointer;
+    }
+
+    .active-album {
+      font-weight: bold;
+    }
   </style>
 </head>
 
 <body>
-    <button id="menu-toggle" aria-label="Menü megnyitása">☰</button>
-    <aside>
-      <h3>Albumok</h3>
-      <div id="album-list"></div>
-    </aside>
-    <div id="content-wrapper">
+  <button id="menu-toggle" aria-label="Menü megnyitása">☰</button>
+  <aside>
+    <h3>Albumok</h3>
+    <div id="album-list"></div>
+  </aside>
+  <div id="content-wrapper">
     <main>
-        <input type="text" id="search" placeholder="Keresés cím, modell vagy pályázat szerint..." style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;">
-        <div id="gallery" class="photo-grid"></div>
-        <div class="pagination" id="pagination"></div>
+      <input type="text" id="search" placeholder="Keresés cím, modell vagy pályázat szerint..."
+        style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;">
+      <div id="gallery" class="photo-grid"></div>
+      <div class="pagination" id="pagination"></div>
     </main>
-    </div>
-
-<!-- <div id="age-modal" style="display:none;">
-  <div id="age-modal-content">
-    <p>Ez a honlap aktfotókat is tartalmaz, ha fiatal vagy, akkor 
-       a végén még megállsz a fejlődésben, ha ilyesmit látsz. Elmúltál 18 éves?</p>
-    <button id="btn-adult-yes">Igen, elmúltam</button>
-    <button id="btn-adult-no">Nem, még nem</button>
   </div>
-</div> -->
 
 
   <script>
@@ -54,21 +92,21 @@
     ];
 
     const dialogs = [
-        "Figyelem a galéria egyes képein förtelmes, erkölcstelen tartalmak - meztelenség - is látható. Elmúltál már 18?",
-        "Itt egyes képeken meztelenség is megjelenik. Cserkészbecsszó, hogy elmúltál már 18?",
-        "Ha apácazárdában dolgozol, vagy a munkahelyeden vagy, akkor a következő galéria nézegetése kínos perceket okozhat. Bevállalod?"
+      "Figyelem a galéria egyes képein förtelmes, erkölcstelen tartalmak - meztelenség - is látható. Elmúltál már 18?",
+      "Itt egyes képeken meztelenség is megjelenik. Cserkészbecsszó, hogy elmúltál már 18?",
+      "Ha apácazárdában dolgozol, vagy a munkahelyeden vagy, akkor a következő galéria nézegetése kínos perceket okozhat. Bevállalod?"
     ];
 
     const yesTexts = [
-        "Már romlott a lelkem, mutass mindent!",
-        "Persze ;)",
-        "Persze, a főnököm jó arc!"
+      "Már romlott a lelkem, mutass mindent!",
+      "Persze ;)",
+      "Persze, a főnököm jó arc!"
     ];
 
     const noTexts = [
-        "Azt se tudom, mi az a meztelenség, én még fiatal vagyok.",
-        "Nem, nem, fúj, nem akarok ilyet látni!",
-        "Isten ments, a végén még el kell imádkoznom 3 Miatyánkot..."
+      "Azt se tudom, mi az a meztelenség, én még fiatal vagyok.",
+      "Nem, nem, fúj, nem akarok ilyet látni!",
+      "Isten ments, a végén még el kell imádkoznom 3 Miatyánkot..."
     ];
 
 
@@ -81,79 +119,79 @@
     let models = [];
     window.isAdult = null;
 
-function getRandomIndex() {
-  return Math.floor(Math.random() * dialogs.length);
-}
+    function getRandomIndex() {
+      return Math.floor(Math.random() * dialogs.length);
+    }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const savedAgeStatus = localStorage.getItem("ageVerified");
-  if (savedAgeStatus === "yes") {
-    window.isAdult = true;
-    applyFilters();
-  } else if (savedAgeStatus === "no") {
-    window.isAdult = false;
-    applyFilters();
-  } else {
-    window.isAdult = null;
-    showAgeVerificationDialog();
-  }
-});
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedAgeStatus = localStorage.getItem("ageVerified");
+      if (savedAgeStatus === "yes") {
+        window.isAdult = true;
+        applyFilters();
+      } else if (savedAgeStatus === "no") {
+        window.isAdult = false;
+        applyFilters();
+      } else {
+        window.isAdult = null;
+        showAgeVerificationDialog();
+      }
+    });
 
-function showAgeVerificationDialog() {
-  const idx = getRandomIndex();
+    function showAgeVerificationDialog() {
+      const idx = getRandomIndex();
 
-  const modal = document.createElement('div');
-  modal.style.position = 'fixed';
-  modal.style.top = '0'; modal.style.left = '0';
-  modal.style.width = '100vw'; modal.style.height = '100vh';
-  modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
-  modal.style.display = 'flex';
-  modal.style.alignItems = 'center';
-  modal.style.justifyContent = 'center';
-  modal.style.zIndex = '10000';
+      const modal = document.createElement('div');
+      modal.style.position = 'fixed';
+      modal.style.top = '0'; modal.style.left = '0';
+      modal.style.width = '100vw'; modal.style.height = '100vh';
+      modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+      modal.style.display = 'flex';
+      modal.style.alignItems = 'center';
+      modal.style.justifyContent = 'center';
+      modal.style.zIndex = '10000';
 
-  const box = document.createElement('div');
-  box.style.background = '#fff';
-  box.style.padding = '2rem';
-  box.style.borderRadius = '8px';
-  box.style.textAlign = 'center';
-  box.style.maxWidth = '400px';
-  box.innerHTML = `
+      const box = document.createElement('div');
+      box.style.background = '#fff';
+      box.style.padding = '2rem';
+      box.style.borderRadius = '8px';
+      box.style.textAlign = 'center';
+      box.style.maxWidth = '400px';
+      box.innerHTML = `
     <p>${dialogs[idx]}</p>
     <button id="btnYes" style="margin-right:1rem;">${yesTexts[idx]}</button>
     <button id="btnNo">${noTexts[idx]}</button>
   `;
 
-  modal.appendChild(box);
-  document.body.appendChild(modal);
+      modal.appendChild(box);
+      document.body.appendChild(modal);
 
-  document.getElementById('btnYes').onclick = () => {
-    window.isAdult = true;
-    localStorage.setItem("ageVerified", "yes");
-    document.body.removeChild(modal);
-    applyFilters();
-  };
+      document.getElementById('btnYes').onclick = () => {
+        window.isAdult = true;
+        localStorage.setItem("ageVerified", "yes");
+        document.body.removeChild(modal);
+        applyFilters();
+      };
 
-  document.getElementById('btnNo').onclick = () => {
-    window.isAdult = false;
-    localStorage.setItem("ageVerified", "no");
-    document.body.removeChild(modal);
-    applyFilters();
-  };
-}
+      document.getElementById('btnNo').onclick = () => {
+        window.isAdult = false;
+        localStorage.setItem("ageVerified", "no");
+        document.body.removeChild(modal);
+        applyFilters();
+      };
+    }
 
     async function loadData() {
-        const [photosRes, salonsRes, modelsRes] = await Promise.all([
-            fetch("data/photos.json"),
-            fetch("data/salons.json"),
-            fetch("data/models.json")
-        ]);
+      const [photosRes, salonsRes, modelsRes] = await Promise.all([
+        fetch("data/photos.json"),
+        fetch("data/salons.json"),
+        fetch("data/models.json")
+      ]);
 
-        photos = await photosRes.json();
-        salons = await salonsRes.json();
-        models = await modelsRes.json();
-        renderAlbums();
-        applyFilters();
+      photos = await photosRes.json();
+      salons = await salonsRes.json();
+      models = await modelsRes.json();
+      renderAlbums();
+      applyFilters();
     }
 
     function renderAlbums() {
@@ -174,57 +212,57 @@ function showAgeVerificationDialog() {
       });
     }
 
-function applyFilters() {
-  filteredPhotos = photos.filter(photo => {
-  
-  if (window.isAdult === null) {
-    return false;
-  }
-  if (window.isAdult === false && (photo.tags || []).includes('adult')) {
-      return false;
+    function applyFilters() {
+      filteredPhotos = photos.filter(photo => {
+
+        if (window.isAdult === null) {
+          return false;
+        }
+        if (window.isAdult === false && (photo.tags || []).includes('adult')) {
+          return false;
+        }
+        if (!isPhotoVisible(photo)) {
+          return false;
+        }
+        const matchesSearch =
+          searchTerm === "" ||
+          photo.title.toLowerCase().includes(searchTerm) ||
+          (photo.models || []).some(id => {
+            const model = findModelById(id);
+            return model && model.name.toLowerCase().includes(searchTerm);
+          }) ||
+          (photo.results || []).some(r => {
+            const salon = findSalonById(r.id);
+            return salon && salon.name.toLowerCase().includes(searchTerm);
+          });
+
+        const matchesAlbum =
+          currentAlbum.tags.length === 0 ||
+          currentAlbum.tags.some(tag => (photo.tags || []).includes(tag));
+
+        return matchesSearch && matchesAlbum;
+      });
+
+      renderGallery();
     }
-  if (!isPhotoVisible(photo)) {
-        return false;
-  }
-const matchesSearch =
-  searchTerm === "" ||
-  photo.title.toLowerCase().includes(searchTerm) ||
-  (photo.models || []).some(id => {
-    const model = findModelById(id);
-    return model && model.name.toLowerCase().includes(searchTerm);
-  }) ||
-  (photo.results || []).some(r => {
-    const salon = findSalonById(r.id);
-    return salon && salon.name.toLowerCase().includes(searchTerm);
-  });
-
-    const matchesAlbum =
-      currentAlbum.tags.length === 0 ||
-      currentAlbum.tags.some(tag => (photo.tags || []).includes(tag));
-
-    return matchesSearch && matchesAlbum;
-  });
-
-  renderGallery();
-}
 
     function isPhotoVisible(photo) {
-        if (!Array.isArray(photo.models)) return true;
+      if (!Array.isArray(photo.models)) return true;
 
-        for (const id of photo.models) {
-            const model = findModelById(id);
-            if (!model) continue;
+      for (const id of photo.models) {
+        const model = findModelById(id);
+        if (!model) continue;
 
-            if (!model.visible) {
-                return false;
-            }
-
-            if ((photo.tags || []).includes("adult") && model.adultVisible === false) {
-                return false;
-            }
+        if (!model.visible) {
+          return false;
         }
 
-        return true;
+        if ((photo.tags || []).includes("adult") && model.adultVisible === false) {
+          return false;
+        }
+      }
+
+      return true;
     }
 
 
@@ -243,25 +281,24 @@ const matchesSearch =
         const detailsId = `details-${index}`;
 
         div.innerHTML = `
-            <img src="images/${photo.filename}" alt="${photo.title}">
+            <img src="images/${photo.filename}" alt="${photo.title}" oncontextmenu="return false;">
             <h2>${photo.title}</h2>
             
             <!-- modellek -->
             ${Array.isArray(photo.models) && photo.models.length > 0 ? `
-             <p><strong>Modellek:</strong> ${
-                photo.models
-                .map(id => {
-                    const model = findModelById(id);
+             <p><strong>Modellek:</strong> ${photo.models
+              .map(id => {
+                const model = findModelById(id);
 
-                    let namePart = model.name;
-                    if (model.links && model.links.length > 0) {
-                        const linksHtml = model.links.map(link => `<a href="${link}" target="_blank">🔗</a>`).join(" ");
-                        namePart += ` ${linksHtml}`;
-                    }
-                    return namePart;
-                })
-            .filter(Boolean)
-            .join(', ')
+                let namePart = model.name;
+                if (model.links && model.links.length > 0) {
+                  const linksHtml = model.links.map(link => `<a href="${link}" target="_blank">🔗</a>`).join(" ");
+                  namePart += ` ${linksHtml}`;
+                }
+                return namePart;
+              })
+              .filter(Boolean)
+              .join(', ')
             }</p>
             ` : ""}            
             
@@ -270,31 +307,31 @@ const matchesSearch =
         <div id="${detailsId}" class="details" style="display: none;">
 <ul>
   ${photo.results.map(r => {
-    const salon = findSalonById(r.id);
-    if (!salon) return "<li>❓ Ismeretlen verseny</li>";
+              const salon = findSalonById(r.id);
+              if (!salon) return "<li>❓ Ismeretlen verseny</li>";
 
-    let awardPart = "";
-    if (r.awarded) {
-      awardPart = "🏅";
-      if (r.certificateImage) {
-        awardPart += `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>`;
-      } else if (r.awardName) {
-        awardPart += ` ${r.awardName}`;
-      }
-    }
+              let awardPart = "";
+              if (r.awarded) {
+                awardPart = "🏅";
+                if (r.certificateImage) {
+                  awardPart += `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>`;
+                } else if (r.awardName) {
+                  awardPart += ` ${r.awardName}`;
+                }
+              }
 
-    return `
+              return `
       <li>
         <strong>${salon.name}</strong> (${salon.country}, ${salon.year})
         ${r.accepted ? "✅" : "❌"}
         ${awardPart}
       </li>
     `;
-  }).join("")}
+            }).join("")}
 </ul>
         </div>`;
         gallery.appendChild(div);
-    });
+      });
 
 
       renderPagination();
@@ -324,39 +361,40 @@ const matchesSearch =
     });
 
     loadData();
-    
-    function toggleDetails(id) {
-        const el = document.getElementById(id);
-        if (el.style.display === "none") {
-            el.style.display = "block";
-        } else {
-            el.style.display = "none";
-        }
-    }    
-    
-    function findSalonById(id) {
-        return salons.find(salon => salon.ids.includes(id));
-    }
-    
-    function findModelById(id) {
-        return models.find(model => model.id === id);
-    }    
-    
-const menuToggle = document.getElementById('menu-toggle');
-const aside = document.querySelector('aside');
-const contentWrapper = document.getElementById('content-wrapper');
 
-menuToggle.addEventListener('click', () => {
-  const isOpen = aside.classList.toggle('open');
-  if (isOpen) {
-    contentWrapper.classList.add('shifted');
-    menuToggle.setAttribute('aria-label', 'Menü bezárása');
-  } else {
-    contentWrapper.classList.remove('shifted');
-    menuToggle.setAttribute('aria-label', 'Menü megnyitása');
-  }
-});
-    
+    function toggleDetails(id) {
+      const el = document.getElementById(id);
+      if (el.style.display === "none") {
+        el.style.display = "block";
+      } else {
+        el.style.display = "none";
+      }
+    }
+
+    function findSalonById(id) {
+      return salons.find(salon => salon.ids.includes(id));
+    }
+
+    function findModelById(id) {
+      return models.find(model => model.id === id);
+    }
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const aside = document.querySelector('aside');
+    const contentWrapper = document.getElementById('content-wrapper');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = aside.classList.toggle('open');
+      if (isOpen) {
+        contentWrapper.classList.add('shifted');
+        menuToggle.setAttribute('aria-label', 'Menü bezárása');
+      } else {
+        contentWrapper.classList.remove('shifted');
+        menuToggle.setAttribute('aria-label', 'Menü megnyitása');
+      }
+    });
+
   </script>
 </body>
+
 </html>
