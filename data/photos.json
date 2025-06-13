@@ -606,7 +606,7 @@
         "certificateImage": "FIAP_2025_112/PHOTOHOUSE SERBIA 2025 - Jozsef Dr. Smidla - E1 Balance.jpg"
       },
       {
-        "id": "FIAP 2024/300",
+        "id": "FIAP 2024/308",
         "accepted": true,
         "awarded": false,
         "awardName": null
@@ -731,6 +731,71 @@
       },
       {
         "id": "FIAP 2024/646",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "The protector",
+    "models": ["vali", "chizu"],
+    "note": "",
+    "tags": ["bw", "awarded", "adult"],
+    "filename": "The protector.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/079",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "GAP Honorable Mention",
+        "certificateImage": "FIAP_2025_079/The_protector_-_GAP_Honorable_Mention_-_CRETE_-_Jozsef_Dr._Smidla_-_13th_Greek_Photographic_Circuit_2025.pdf"
+      },
+      {
+        "id": "FIAP 2025/012D",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "FIP Ribbon",
+        "certificateImage": "FIAP_2025_012/The protector_FIP RIBBON.jpeg"
+      },
+      {
+        "id": "FIAP 2025/111",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/080",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/081",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/082",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/075",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/192",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/245",
         "accepted": true,
         "awarded": false,
         "awardName": null
