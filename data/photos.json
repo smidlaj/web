@@ -1029,6 +1029,39 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "Marilyn",
+    "models": ["vali"],
+    "note": "",
+    "tags": ["color", "marilyn"],
+    "filename": "Marilyn.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/649",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/656",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2024/646",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/012D",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
