@@ -1014,6 +1014,21 @@
         "awardName": null
       }
     ]
-  }  
+  },
+  {
+    "title": "Bacchante",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "aegis"],
+    "filename": "Bacchante.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/300",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  }
 
 ]
