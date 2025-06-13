@@ -80,7 +80,6 @@
     </main>
   </div>
 
-
   <script>
     const PAGE_SIZE = 10;
     const albums = [
@@ -335,6 +334,7 @@
 
 
       renderPagination();
+      setupLightbox();
     }
 
     function renderPagination() {
@@ -393,6 +393,93 @@
         menuToggle.setAttribute('aria-label', 'Menü megnyitása');
       }
     });
+
+    function setupLightbox() {
+      const galleryImages = document.querySelectorAll("#gallery .photo img");
+
+      let currentIndex = -1;
+
+      let lightboxOverlay = document.getElementById("lightbox-overlay");
+
+      if (!lightboxOverlay) {
+        lightboxOverlay = document.createElement("div");
+        lightboxOverlay.id = "lightbox-overlay";
+        lightboxOverlay.innerHTML = `
+    <img id="lightbox-img" style="max-width: 90vw; max-height: 90vh; border-radius: 5px;" oncontextmenu="return false;">
+    <button id="prev-btn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 2rem;">◀</button>
+    <button id="next-btn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 2rem;">▶</button>
+  `;
+        document.body.appendChild(lightboxOverlay);
+      }
+
+      const lightboxImg = document.getElementById("lightbox-img");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+
+      function showLightbox(index) {
+        currentIndex = index;
+        const imgSrc = galleryImages[currentIndex].src;
+        lightboxImg.src = imgSrc;
+        lightboxOverlay.style.display = "flex";
+      }
+
+      function hideLightbox() {
+        lightboxOverlay.style.display = "none";
+      }
+
+      function showNext() {
+        if (currentIndex < galleryImages.length - 1) {
+          showLightbox(currentIndex + 1);
+        }
+      }
+
+      function showPrev() {
+        if (currentIndex > 0) {
+          showLightbox(currentIndex - 1);
+        }
+      }
+
+      galleryImages.forEach((img, index) => {
+        img.addEventListener("click", () => showLightbox(index));
+        img.addEventListener("contextmenu", e => e.preventDefault()); // Tiltjuk jobb klikket
+      });
+
+      lightboxOverlay.addEventListener("click", e => {
+        if (e.target === lightboxOverlay) hideLightbox();
+      });
+
+      document.addEventListener("keydown", e => {
+        if (lightboxOverlay.style.display === "flex") {
+          if (e.key === "Escape") hideLightbox();
+          if (e.key === "ArrowRight") showNext();
+          if (e.key === "ArrowLeft") showPrev();
+        }
+      });
+
+      prevBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        showPrev();
+      });
+
+      nextBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        showNext();
+      });
+
+      // Mobil érintés kezelés
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      lightboxOverlay.addEventListener("touchstart", e => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      lightboxOverlay.addEventListener("touchend", e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 50) showNext();
+        if (touchEndX > touchStartX + 50) showPrev();
+      });
+    }
 
   </script>
 </body>
