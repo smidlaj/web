@@ -1062,6 +1062,40 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "The Masquerade of Death",
+    "models": [],
+    "note": "",
+    "tags": ["color", "portrait", "awarded", "dark"],
+    "filename": "The Masquerade of Death.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/175",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "FIAP_2025_175/1691.pdf"
+      },
+      {
+        "id": "FIAP 2025/101",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/031",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/032",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
