@@ -1210,6 +1210,27 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "Girl resting by the lake",
+    "models": [],
+    "note": "",
+    "tags": ["color", "luca_szodliget_2024"],
+    "filename": "Girld resting by the lake.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/603",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/176",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
