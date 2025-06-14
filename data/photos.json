@@ -1096,6 +1096,39 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "Resting caterpillar",
+    "models": [],
+    "note": "",
+    "tags": ["color", "nature"],
+    "filename": "Resting caterpillar.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/106",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/111",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/062",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/064",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
