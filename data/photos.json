@@ -1156,6 +1156,33 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "The Angelic Form",
+    "models": ["chizu"],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "The Angelic Form.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/101",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/112",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/135",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
