@@ -68,7 +68,10 @@
 <body>
   <button id="menu-toggle" aria-label="Menü megnyitása">☰</button>
   <aside>
-    <h3>Albumok</h3>
+    <button onclick="switchLang('en')">English</button>
+    <button onclick="switchLang('hu')">Magyar</button>
+
+    <h3 data-i18n="album_albums"></h3>
     <div id="album-list"></div>
   </aside>
   <div id="content-wrapper">
@@ -79,19 +82,24 @@
       <div class="pagination" id="pagination"></div>
     </main>
   </div>
-
+  <script src="i18n.js"></script>
   <script>
+    async function switchLang(lang) {
+      localStorage.setItem("lang", lang);
+      location.reload();
+    }
+
     const PAGE_SIZE = 10;
     const albums = [
-      { name: "Összes", tags: [] },
-      { name: "Díjazottak", tags: ["awarded"] },
-      { name: "Monokróm", tags: ["bw"] },
-      { name: "Színes", tags: ["color"] },
-      { name: "Marilyn", tags: ["marilyn"] },
-      { name: "Balett", tags: ["balett"] },
-      { name: "Aégis", tags: ["aegis"] },
-      { name: "Dark", tags: ["dark"] },
-      { name: "Természet", tags: ["nature"] }
+      { key: "all", tags: [] },
+      { key: "awarded", tags: ["awarded"] },
+      { key: "bw", tags: ["bw"] },
+      { key: "color", tags: ["color"] },
+      { key: "marilyn", tags: ["marilyn"] },
+      { key: "ballet", tags: ["balett"] },
+      { key: "aegis", tags: ["aegis"] },
+      { key: "dark", tags: ["dark"] },
+      { key: "nature", tags: ["nature"] }
     ];
 
     const dialogs = [
@@ -126,7 +134,12 @@
       return Math.floor(Math.random() * dialogs.length);
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
+      const lang = localStorage.getItem("lang") || "hu";
+      await I18n.load(lang);
+      I18n.translateDOM();
+
+
       const savedAgeStatus = localStorage.getItem("ageVerified");
       if (savedAgeStatus === "yes") {
         window.isAdult = true;
@@ -202,7 +215,8 @@
       list.innerHTML = "";
       albums.forEach((album, i) => {
         const btn = document.createElement("button");
-        btn.textContent = album.name;
+        const labelKey = `album_${album.key}`;
+        btn.textContent = I18n.t(labelKey);
         btn.className = "album-button" + (i === 0 ? " active-album" : "");
         btn.onclick = () => {
           document.querySelectorAll(".album-button").forEach(b => b.classList.remove("active-album"));
@@ -282,14 +296,14 @@
         div.className = "photo";
 
         const detailsId = `details-${index}`;
-
+        const modelsLabel = I18n.t("models");
         div.innerHTML = `
             <img src="images/${photo.filename}" alt="${photo.title}" oncontextmenu="return false;">
             <h2>${photo.title}</h2>
             
             <!-- modellek -->
             ${Array.isArray(photo.models) && photo.models.length > 0 ? `
-             <p><strong>Modellek:</strong> ${photo.models
+             <p><strong>${modelsLabel}</strong> ${photo.models
               .map(id => {
                 const model = findModelById(id);
 
@@ -485,7 +499,18 @@
       });
     }
 
+
+    /*(async () => {
+      const lang = localStorage.getItem("lang") || "hu";
+      await I18n.load(lang);
+      I18n.translateDOM();
+    })();*/
   </script>
 </body>
 
 </html>
+
+<!-- 
+<h1 data-i18n="greeting_user" data-args='["Anna", "barátom"]'></h1>
+<p data-i18n="score_text" data-args='["Dani", 42]'></p>
+-->
