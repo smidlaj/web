@@ -1294,6 +1294,27 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "Blacksmith",
+    "models": [],
+    "note": "",
+    "tags": ["color"],
+    "filename": "Blacksmith.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/666",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/020",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
