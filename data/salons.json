@@ -418,5 +418,11 @@
         "year": 2025,
         "ids": ["MFSZE 2025/01"],
         "country": "Magyarország"
+      },
+      {
+        "name": "SALON INTERNATIONAL DAGUERRE",
+        "year": 2025,
+        "ids": ["FIAP 2025/191"],
+        "country": "Franciaország"
       }
     ]

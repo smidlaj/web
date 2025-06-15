@@ -274,8 +274,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }     
-      
+      },
+      {
+        "id": "FIAP 2025/191",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }  
     ]
   },
   {
@@ -485,6 +490,12 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
+      },
+      {
+        "id": "FIAP 2025/191",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
       }
     ]
   },
@@ -655,6 +666,12 @@
       },
       {
         "id": "FIAP 2025/245",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/191",
         "accepted": true,
         "awarded": false,
         "awardName": null
@@ -1154,6 +1171,12 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
+      },
+      {
+        "id": "FIAP 2025/191",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
       }
     ]
   },
@@ -1467,7 +1490,7 @@
     "title": "Lucy with flowers",
     "models": ["lucfenyo"],
     "note": "",
-    "tags": ["color", "adult", "luca_szodliget_2024"],
+    "tags": ["color", "adult", "luca_szodliget_2024", "awarded"],
     "filename": "Lucy with flowers.jpg",
     "results": [
       {
