@@ -424,5 +424,11 @@
         "year": 2025,
         "ids": ["FIAP 2025/191"],
         "country": "Franciaország"
+      },
+      {
+        "name": "PhotoHouse Grand Prix 2025",
+        "year": 2025,
+        "ids": ["FIAP 2025/264"],
+        "country": "Szerbia"
       }
     ]
