@@ -1315,6 +1315,27 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "Elegance in a tub",
+    "models": ["vali", "chizu"],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Elegance in a tub.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/106",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/032",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
