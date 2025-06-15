@@ -1535,6 +1535,171 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "Snake",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "portrait"],
+    "filename": "Snake.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/322",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Apple",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "portrait"],
+    "filename": "Apple.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/646",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Walk by the lake",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["bw", "adult", "luca_szodliget_2024"],
+    "filename": "Walk by the lake.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/101",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Snacking caterpillar",
+    "models": [],
+    "note": "",
+    "tags": ["color", "nature"],
+    "filename": "Snacking caterpillar.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/106",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Girl with book",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["bw", "adult", "luca_szodliget_2024"],
+    "filename": "Girl with book.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/564",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Makeup",
+    "models": ["vali"],
+    "note": "",
+    "tags": ["color", "adult", "marilyn"],
+    "filename": "Makeup.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/032",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Between Pain and Desire",
+    "models": ["vali"],
+    "note": "",
+    "tags": ["color", "adult", "marilyn"],
+    "filename": "Between Pain and Desire.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/137",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Chizu in shadow",
+    "models": ["chizu"],
+    "note": "",
+    "tags": ["color", "adult", "portrait"],
+    "filename": "Chizu in shadow.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/112",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Recursion with Dorothy",
+    "models": ["dorothea"],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Recursion with Dorothy.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/012D",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Chizu with angel wings",
+    "models": ["chizu"],
+    "note": "",
+    "tags": ["color"],
+    "filename": "Chizu with angel wings.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/064",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Lucy in the forest cabin",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["bw", "adult", "luca_szodliget_2024"],
+    "filename": "Lucy in the forest cabin.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/114",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
