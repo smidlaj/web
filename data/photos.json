@@ -1357,6 +1357,27 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "Guardian of the Future",
+    "models": ["chizu"],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Guardian of the Future.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/032",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/175",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
