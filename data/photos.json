@@ -1378,6 +1378,163 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "A Moment of Weightlessness",
+    "models": [],
+    "note": "",
+    "tags": ["color", "balett"],
+    "filename": "A Moment of Weightlessness.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/020",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/080",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Floating in Perfect Balance",
+    "models": [],
+    "note": "",
+    "tags": ["color", "balett"],
+    "filename": "Floating in Perfect Balance.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/137",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/075",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Quiet company",
+    "models": [],
+    "note": "",
+    "tags": ["color", "dark"],
+    "filename": "Quiet company.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/079",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/080",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Panna with hat",
+    "models": [],
+    "note": "",
+    "tags": ["color", "adult"],
+    "filename": "Panna with hat.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/192",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/111",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Lucy with flowers",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "luca_szodliget_2024"],
+    "filename": "Lucy with flowers.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/114",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "Honourable Mention",
+        "certificateImage": "FIAP_2025_114/LISBOA 2025 - Jozsef Dr. Smidla - D2 Lucy with flowers.jpg"
+      },
+      {
+        "id": "FIAP 2025/176",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Valeria and Chizu",
+    "models": ["vali", "chizu"],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Valeria and Chizu.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/274",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2025/300",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Shaman",
+    "models": ["vali"],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Shaman.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/603",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Recursion",
+    "models": ["vali"],
+    "note": "",
+    "tags": ["color", "adult"],
+    "filename": "Recursion.jpg",
+    "results": [
+      {
+        "id": "FIAP 2024/040",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
   }
 
 ]
