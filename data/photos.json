@@ -1088,7 +1088,7 @@
   },
   {
     "title": "The Masquerade of Death",
-    "models": [],
+    "models": ["hanita"],
     "note": "",
     "tags": ["color", "portrait", "awarded", "dark"],
     "filename": "The Masquerade of Death.jpg",
@@ -1452,7 +1452,7 @@
   },
   {
     "title": "Quiet company",
-    "models": [],
+    "models": ["hanita"],
     "note": "",
     "tags": ["color", "dark"],
     "filename": "Quiet company.jpg",

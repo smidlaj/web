@@ -40,6 +40,13 @@
         "links": ["https://www.instagram.com/gothic_vampire_666/"],
         "adultVisible": true,
         "visible": true
+    },
+    {
+        "id": "hanita",
+        "name": "Horváth Anita",
+        "links": ["https://www.instagram.com/a_n_y_00"],
+        "adultVisible": true,
+        "visible": true       
     }
     
 ]
