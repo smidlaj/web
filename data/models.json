@@ -33,6 +33,13 @@
         "links": [],
         "adultVisible": true,
         "visible": true
+    },
+    {
+        "id": "tkriszti",
+        "name": "Talpos Krisztina",
+        "links": ["https://www.instagram.com/gothic_vampire_666/"],
+        "adultVisible": true,
+        "visible": true
     }
     
 ]

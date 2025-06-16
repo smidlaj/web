@@ -1744,6 +1744,39 @@
         "awardName": null
       }
     ]
+  },
+  {
+    "title": "Death Priestess",
+    "models": ["tkriszti"],
+    "note": "",
+    "tags": ["bw", "dark"],
+    "filename": "Death Priestess.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/264",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Goth girl",
+    "models": ["tkriszti"],
+    "note": "",
+    "tags": ["bw", "dark"],
+    "filename": "Goth girl.jpg",
+    "results": [
+    ]
+  },
+  {
+    "title": "Silence Before the Sacrifice",
+    "models": ["tkriszti"],
+    "note": "",
+    "tags": ["bw", "dark"],
+    "filename": "Silence Before the Sacrifice.jpg",
+    "results": [
+    ]
   }
 
 ]
