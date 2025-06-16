@@ -86,6 +86,8 @@
   <script>
     async function switchLang(lang) {
       localStorage.setItem("lang", lang);
+      await I18n.load(lang);
+      I18n.translateDOM();
       location.reload();
     }
 
