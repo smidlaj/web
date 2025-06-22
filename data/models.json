@@ -47,6 +47,14 @@
         "links": ["https://www.instagram.com/a_n_y_00"],
         "adultVisible": true,
         "visible": true       
+    },
+    {
+        "id": "nadino",
+        "name": "Nadino",
+        "links": ["https://www.instagram.com/na_dino98/"],
+        "adultVisible": false,
+        "visible": true          
     }
+
     
 ]
