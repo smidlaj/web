@@ -164,7 +164,13 @@
         "awarded": false,
         "awardName": null,
         "certificateImage": null
-      }
+      },
+      {
+        "id": "FIAP 2025/303",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
     ]
   },
 
@@ -280,7 +286,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }  
+      },
+      {
+        "id": "FIAP 2025/303",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
     ]
   },
   {
@@ -496,7 +508,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }
+      },
+      {
+        "id": "FIAP 2025/303",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
     ]
   },
   {
@@ -578,7 +596,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }
+      },
+      {
+        "id": "FIAP 2025/303",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
     ]
   },
   {
@@ -1826,6 +1850,44 @@
     "tags": ["color"],
     "filename": "Woman at the piano.jpg",
     "results": []
-  }
+  },
+  {
+    "title": "Thalia Unveiled",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "muse"],
+    "filename": "Thalia Unveiled.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/303",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
+    ]
+  },
+  {
+    "title": "Thalia",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "muse"],
+    "filename": "Thalia.jpg",
+    "results": []
+  },
+  {
+    "title": "Eyes on the Horizon",
+    "models": [],
+    "note": "",
+    "tags": ["color", "nature"],
+    "filename": "Eyes on the Horizon.jpg",
+    "results": [
+      {
+        "id": "FIAP 2025/304",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  }  
 
 ]

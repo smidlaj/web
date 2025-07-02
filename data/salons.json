@@ -430,5 +430,17 @@
         "year": 2025,
         "ids": ["FIAP 2025/264"],
         "country": "Szerbia"
-      }
+      },
+            {
+        "name": "Balkan Frame Circuit 2025 - Perasto",
+        "year": 2025,
+        "ids": ["FIAP 2025/303"],
+        "country": "Montenegró"
+      },
+      {
+        "name": "Balkan Frame Circuit 2025 - Cacak",
+        "year": 2025,
+        "ids": ["FIAP 2025/304"],
+        "country": "Szerbia"
+      }      
     ]
