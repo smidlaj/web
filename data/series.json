@@ -1,0 +1,12 @@
+[
+  {
+    "id": "pygmalion",
+    "title": {"hu": "Pügmalion", "en": "Pygmalion"},
+    "note": {"hu": "", "en": ""},
+    "models": [],
+    "cover": "series/pygmalion/cover.jpg",
+    "tag": "series_pygmalion",
+    "visible": true,
+    "order": 1
+  }
+]

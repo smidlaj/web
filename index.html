@@ -1,518 +1,78 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="hu">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fotópályázati galéria</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      display: flex;
-      font-family: sans-serif;
-      margin: 0;
-    }
-
-    aside {
-      width: 200px;
-      padding: 1rem;
-      background: #f0f0f0;
-    }
-
-    main {
-      flex-grow: 1;
-      padding: 1rem;
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-
-    .photo img {
-      width: 100%;
-      border-radius: 5px;
-    }
-
-    .pagination {
-      text-align: center;
-      margin-top: 1rem;
-    }
-
-    .tag {
-      background: #eef;
-      border-radius: 5px;
-      padding: 0.2em 0.5em;
-      margin: 0.2em;
-      display: inline-block;
-    }
-
-    .cert {
-      max-width: 100%;
-      margin-top: 5px;
-    }
-
-    .album-button {
-      display: block;
-      margin: 0.3rem 0;
-      cursor: pointer;
-    }
-
-    .active-album {
-      font-weight: bold;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photo gallery</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-
 <body>
-  <button id="menu-toggle" aria-label="Menü megnyitása">☰</button>
-  <aside>
-    <button onclick="switchLang('en')">English</button>
-    <button onclick="switchLang('hu')">Magyar</button>
-
-    <h3 data-i18n="album_albums"></h3>
-    <div id="album-list"></div>
-  </aside>
-  <div id="content-wrapper">
-    <main>
-      <input type="text" id="search" placeholder="Keresés cím, modell vagy pályázat szerint..."
-        style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;">
-      <div id="gallery" class="photo-grid"></div>
-      <div class="pagination" id="pagination"></div>
-    </main>
+  <!-- Content warning / landing gate -->
+  <div id="gate" class="gate hidden" aria-hidden="true">
+    <div class="gate__bg"></div>
+    <div class="gate__content" role="dialog" aria-modal="true">
+      <h1 data-i18n="gateTitle">Figyelmeztetés</h1>
+      <p data-i18n="gateText"></p>
+      <div class="gate__buttons">
+        <button id="gateAccept" class="gate__imgbtn" type="button">
+          <img id="gateAcceptImg" alt="" />
+        </button>
+        <button id="gateDecline" class="gate__imgbtn" type="button">
+          <img id="gateDeclineImg" alt="" />
+        </button>
+      </div>
+    </div>
   </div>
-  <script src="i18n.js"></script>
-  <script>
-    async function switchLang(lang) {
-      localStorage.setItem("lang", lang);
-      await I18n.load(lang);
-      I18n.translateDOM();
-      location.reload();
-    }
 
-    const PAGE_SIZE = 10;
-    const albums = [
-      { key: "all", tags: [] },
-      { key: "awarded", tags: ["awarded"] },
-      { key: "bw", tags: ["bw"] },
-      { key: "color", tags: ["color"] },
-      { key: "marilyn", tags: ["marilyn"] },
-      { key: "ballet", tags: ["balett"] },
-      { key: "aegis", tags: ["aegis"] },
-      { key: "dark", tags: ["dark"] },
-      { key: "nature", tags: ["nature"] }
-    ];
-
-    const dialogs = [
-      "Figyelem a galéria egyes képein förtelmes, erkölcstelen tartalmak - meztelenség - is látható. Elmúltál már 18?",
-      "Itt egyes képeken meztelenség is megjelenik. Cserkészbecsszó, hogy elmúltál már 18?",
-      "Ha apácazárdában dolgozol, vagy a munkahelyeden vagy, akkor a következő galéria nézegetése kínos perceket okozhat. Bevállalod?"
-    ];
-
-    const yesTexts = [
-      "Már romlott a lelkem, mutass mindent!",
-      "Persze ;)",
-      "Persze, a főnököm jó arc!"
-    ];
-
-    const noTexts = [
-      "Azt se tudom, mi az a meztelenség, én még fiatal vagyok.",
-      "Nem, nem, fúj, nem akarok ilyet látni!",
-      "Isten ments, a végén még el kell imádkoznom 3 Miatyánkot..."
-    ];
-
-
-    let photos = [];
-    let filteredPhotos = [];
-    let currentPage = 1;
-    let currentAlbum = albums[0];
-    let searchTerm = "";
-    let salons = [];
-    let models = [];
-    window.isAdult = null;
-
-    function getRandomIndex() {
-      return Math.floor(Math.random() * dialogs.length);
-    }
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      const lang = localStorage.getItem("lang") || "hu";
-      await I18n.load(lang);
-      I18n.translateDOM();
-
-
-      const savedAgeStatus = localStorage.getItem("ageVerified");
-      if (savedAgeStatus === "yes") {
-        window.isAdult = true;
-        applyFilters();
-      } else if (savedAgeStatus === "no") {
-        window.isAdult = false;
-        applyFilters();
-      } else {
-        window.isAdult = null;
-        showAgeVerificationDialog();
-      }
-    });
-
-    function showAgeVerificationDialog() {
-      const idx = getRandomIndex();
-
-      const modal = document.createElement('div');
-      modal.style.position = 'fixed';
-      modal.style.top = '0'; modal.style.left = '0';
-      modal.style.width = '100vw'; modal.style.height = '100vh';
-      modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
-      modal.style.display = 'flex';
-      modal.style.alignItems = 'center';
-      modal.style.justifyContent = 'center';
-      modal.style.zIndex = '10000';
-
-      const box = document.createElement('div');
-      box.style.background = '#fff';
-      box.style.padding = '2rem';
-      box.style.borderRadius = '8px';
-      box.style.textAlign = 'center';
-      box.style.maxWidth = '400px';
-      box.innerHTML = `
-    <p>${dialogs[idx]}</p>
-    <button id="btnYes" style="margin-right:1rem;">${yesTexts[idx]}</button>
-    <button id="btnNo">${noTexts[idx]}</button>
-  `;
-
-      modal.appendChild(box);
-      document.body.appendChild(modal);
-
-      document.getElementById('btnYes').onclick = () => {
-        window.isAdult = true;
-        localStorage.setItem("ageVerified", "yes");
-        document.body.removeChild(modal);
-        applyFilters();
-      };
-
-      document.getElementById('btnNo').onclick = () => {
-        window.isAdult = false;
-        localStorage.setItem("ageVerified", "no");
-        document.body.removeChild(modal);
-        applyFilters();
-      };
-    }
-
-    async function loadData() {
-      const [photosRes, salonsRes, modelsRes] = await Promise.all([
-        fetch("data/photos.json"),
-        fetch("data/salons.json"),
-        fetch("data/models.json")
-      ]);
-
-      photos = await photosRes.json();
-      salons = await salonsRes.json();
-      models = await modelsRes.json();
-      renderAlbums();
-      applyFilters();
-    }
-
-    function renderAlbums() {
-      const list = document.getElementById("album-list");
-      list.innerHTML = "";
-      albums.forEach((album, i) => {
-        const btn = document.createElement("button");
-        const labelKey = `album_${album.key}`;
-        btn.textContent = I18n.t(labelKey);
-        btn.className = "album-button" + (i === 0 ? " active-album" : "");
-        btn.onclick = () => {
-          document.querySelectorAll(".album-button").forEach(b => b.classList.remove("active-album"));
-          btn.classList.add("active-album");
-          currentAlbum = album;
-          currentPage = 1;
-          applyFilters();
-        };
-        list.appendChild(btn);
-      });
-    }
-
-    function applyFilters() {
-      filteredPhotos = photos.filter(photo => {
-
-        if (window.isAdult === null) {
-          return false;
-        }
-        if (window.isAdult === false && (photo.tags || []).includes('adult')) {
-          return false;
-        }
-        if (!isPhotoVisible(photo)) {
-          return false;
-        }
-        const matchesSearch =
-          searchTerm === "" ||
-          photo.title.toLowerCase().includes(searchTerm) ||
-          (photo.models || []).some(id => {
-            const model = findModelById(id);
-            return model && model.name.toLowerCase().includes(searchTerm);
-          }) ||
-          (photo.results || []).some(r => {
-            const salon = findSalonById(r.id);
-            return salon && salon.name.toLowerCase().includes(searchTerm);
-          });
-
-        const matchesAlbum =
-          currentAlbum.tags.length === 0 ||
-          currentAlbum.tags.some(tag => (photo.tags || []).includes(tag));
-
-        return matchesSearch && matchesAlbum;
-      });
-
-      renderGallery();
-    }
-
-    function isPhotoVisible(photo) {
-      if (!Array.isArray(photo.models)) return true;
-
-      for (const id of photo.models) {
-        const model = findModelById(id);
-        if (!model) continue;
-
-        if (!model.visible) {
-          return false;
-        }
-
-        if ((photo.tags || []).includes("adult") && model.adultVisible === false) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-
-    function renderGallery() {
-      const gallery = document.getElementById("gallery");
-      const start = (currentPage - 1) * PAGE_SIZE;
-      const end = start + PAGE_SIZE;
-      const pagePhotos = filteredPhotos.slice(start, end);
-
-      gallery.innerHTML = "";
-
-      pagePhotos.forEach((photo, index) => {
-        const div = document.createElement("div");
-        div.className = "photo";
-
-        const detailsId = `details-${index}`;
-        const modelsLabel = I18n.t("models");
-        div.innerHTML = `
-            <img src="images/${photo.filename}" alt="${photo.title}" oncontextmenu="return false;">
-            <h2>${photo.title}</h2>
-            
-            <!-- modellek -->
-            ${Array.isArray(photo.models) && photo.models.length > 0 ? `
-             <p><strong>${modelsLabel}</strong> ${photo.models
-              .map(id => {
-                const model = findModelById(id);
-
-                let namePart = model.name;
-                if (model.links && model.links.length > 0) {
-                  const linksHtml = model.links.map(link => `<a href="${link}" target="_blank">🔗</a>`).join(" ");
-                  namePart += ` ${linksHtml}`;
-                }
-                return namePart;
-              })
-              .filter(Boolean)
-              .join(', ')
-            }</p>
-            ` : ""}            
-            
-            ${photo.note ? `<p><strong>Megjegyzés:</strong> ${photo.note}</p>` : ""}
-        <button onclick="toggleDetails('${detailsId}')">📄 Eredmények megtekintése</button>
-        <div id="${detailsId}" class="details" style="display: none;">
-<ul>
-  ${photo.results.map(r => {
-              const salon = findSalonById(r.id);
-              if (!salon) return "<li>❓ Ismeretlen verseny</li>";
-
-              let awardPart = "";
-              if (r.awarded) {
-                awardPart = "🏅";
-                if (r.certificateImage) {
-                  awardPart += `<br><a href="images/certs/${r.certificateImage}" target="_blank">${r.awardName || "Díjazott oklevél"}</a>`;
-                } else if (r.awardName) {
-                  awardPart += ` ${r.awardName}`;
-                }
-              }
-
-              return `
-      <li>
-        <strong>${salon.name}</strong> (${salon.country}, ${salon.year})
-        ${r.accepted ? "✅" : "❌"}
-        ${awardPart}
-      </li>
-    `;
-            }).join("")}
-</ul>
-        </div>`;
-        gallery.appendChild(div);
-      });
-
-
-      renderPagination();
-      setupLightbox();
-    }
-
-    function renderPagination() {
-      const totalPages = Math.ceil(filteredPhotos.length / PAGE_SIZE);
-      const pagination = document.getElementById("pagination");
-      pagination.innerHTML = "";
-
-      for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement("button");
-        btn.textContent = i;
-        if (i === currentPage) btn.disabled = true;
-        btn.onclick = () => {
-          currentPage = i;
-          renderGallery();
-        };
-        pagination.appendChild(btn);
-      }
-    }
-
-    document.getElementById("search").addEventListener("input", e => {
-      searchTerm = e.target.value.trim().toLowerCase();
-      currentPage = 1;
-      applyFilters();
-    });
-
-    loadData();
-
-    function toggleDetails(id) {
-      const el = document.getElementById(id);
-      if (el.style.display === "none") {
-        el.style.display = "block";
-      } else {
-        el.style.display = "none";
-      }
-    }
-
-    function findSalonById(id) {
-      return salons.find(salon => salon.ids.includes(id));
-    }
-
-    function findModelById(id) {
-      return models.find(model => model.id === id);
-    }
-
-    const menuToggle = document.getElementById('menu-toggle');
-    const aside = document.querySelector('aside');
-    const contentWrapper = document.getElementById('content-wrapper');
-
-    menuToggle.addEventListener('click', () => {
-      const isOpen = aside.classList.toggle('open');
-      if (isOpen) {
-        contentWrapper.classList.add('shifted');
-        menuToggle.setAttribute('aria-label', 'Menü bezárása');
-      } else {
-        contentWrapper.classList.remove('shifted');
-        menuToggle.setAttribute('aria-label', 'Menü megnyitása');
-      }
-    });
-
-    function setupLightbox() {
-      const galleryImages = document.querySelectorAll("#gallery .photo img");
-
-      let currentIndex = -1;
-
-      let lightboxOverlay = document.getElementById("lightbox-overlay");
-
-      if (!lightboxOverlay) {
-        lightboxOverlay = document.createElement("div");
-        lightboxOverlay.id = "lightbox-overlay";
-        lightboxOverlay.innerHTML = `
-    <img id="lightbox-img" style="max-width: 90vw; max-height: 90vh; border-radius: 5px;" oncontextmenu="return false;">
-    <button id="prev-btn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 2rem;">◀</button>
-    <button id="next-btn" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 2rem;">▶</button>
-  `;
-        document.body.appendChild(lightboxOverlay);
-      }
-
-      const lightboxImg = document.getElementById("lightbox-img");
-      const prevBtn = document.getElementById("prev-btn");
-      const nextBtn = document.getElementById("next-btn");
-
-      function showLightbox(index) {
-        currentIndex = index;
-        const imgSrc = galleryImages[currentIndex].src;
-        lightboxImg.src = imgSrc;
-        lightboxOverlay.style.display = "flex";
-      }
-
-      function hideLightbox() {
-        lightboxOverlay.style.display = "none";
-      }
-
-      function showNext() {
-        if (currentIndex < galleryImages.length - 1) {
-          showLightbox(currentIndex + 1);
-        }
-      }
-
-      function showPrev() {
-        if (currentIndex > 0) {
-          showLightbox(currentIndex - 1);
-        }
-      }
-
-      galleryImages.forEach((img, index) => {
-        img.addEventListener("click", () => showLightbox(index));
-        img.addEventListener("contextmenu", e => e.preventDefault()); // Tiltjuk jobb klikket
-      });
-
-      lightboxOverlay.addEventListener("click", e => {
-        if (e.target === lightboxOverlay) hideLightbox();
-      });
-
-      document.addEventListener("keydown", e => {
-        if (lightboxOverlay.style.display === "flex") {
-          if (e.key === "Escape") hideLightbox();
-          if (e.key === "ArrowRight") showNext();
-          if (e.key === "ArrowLeft") showPrev();
-        }
-      });
-
-      prevBtn.addEventListener("click", e => {
-        e.stopPropagation();
-        showPrev();
-      });
-
-      nextBtn.addEventListener("click", e => {
-        e.stopPropagation();
-        showNext();
-      });
-
-      // Mobil érintés kezelés
-      let touchStartX = 0;
-      let touchEndX = 0;
-
-      lightboxOverlay.addEventListener("touchstart", e => {
-        touchStartX = e.changedTouches[0].screenX;
-      });
-
-      lightboxOverlay.addEventListener("touchend", e => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchEndX < touchStartX - 50) showNext();
-        if (touchEndX > touchStartX + 50) showPrev();
-      });
-    }
-
-
-    /*(async () => {
-      const lang = localStorage.getItem("lang") || "hu";
-      await I18n.load(lang);
-      I18n.translateDOM();
-    })();*/
-  </script>
+  <!-- Main app -->
+  <div id="app" class="app" hidden>
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar__top">
+        <div class="lang" aria-label="Language">
+          <button class="lang__btn" type="button" data-lang="en">English</button>
+          <button class="lang__btn" type="button" data-lang="hu">Magyar</button>
+        </div>
+      </div>
+
+      <div class="sidebar__section">
+        <h2 data-i18n="albums">Albumok</h2>
+        <div id="albumList" class="sidebar__list" aria-label="Albums"></div>
+      </div>
+
+      <div class="sidebar__section">
+        <h2 data-i18n="series">Sorozatok</h2>
+        <div id="seriesSidebarList" class="sidebar__list" aria-label="Series"></div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button id="hamburger" class="hamburger" type="button" aria-label="Menu">☰</button>
+        <input id="search" class="search" type="search" placeholder="" autocomplete="off" />
+      </header>
+
+      <main>
+        <div id="subheader" class="subheader"></div>
+        <div id="grid" class="grid"></div>
+        <div id="pagination" class="pagination" aria-label="Pagination"></div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Lightbox viewer -->
+  <div id="lightbox" class="lightbox hidden" aria-hidden="true">
+    <button id="lbClose" class="lightbox__close" type="button" aria-label="Close">×</button>
+    <button id="lbPrev" class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Previous">◀</button>
+
+    <figure class="lightbox__figure">
+      <img id="lbImage" alt="" draggable="false" />
+      <figcaption id="lbCaption"></figcaption>
+    </figure>
+
+    <button id="lbNext" class="lightbox__nav lightbox__nav--next" type="button" aria-label="Next">▶</button>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js" defer></script>
 </body>
-
 </html>
-
-<!-- 
-<h1 data-i18n="greeting_user" data-args='["Anna", "barátom"]'></h1>
-<p data-i18n="score_text" data-args='["Dani", 42]'></p>
--->

@@ -1888,6 +1888,87 @@
         "awardName": null
       }      
     ]
-  }  
+  },  
 
+
+  {
+    "title": "Pygmalion #1",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-01.jpg",
+    "results": []
+  },
+  {
+    "title": "Pygmalion #2",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-02.jpg",
+    "results": []
+  },
+  {
+    "title": "Pygmalion #3",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-03.jpg",
+    "results": []
+  },
+  {
+    "title": "Pygmalion #4",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-04.jpg",
+    "results": []
+  },
+  {
+    "title": "Pygmalion #5",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-05.jpg",
+    "results": []
+  },
+  {
+    "title": "Pygmalion #6",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-06.jpg",
+    "results": []
+  },
+  {
+    "title": "Pygmalion #7",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-07.jpg",
+    "results": []
+  },
+  {
+    "title": "Pygmalion #8",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-08.jpg",
+    "results": []
+  },
+  {
+    "title": "Pygmalion #9",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-09.jpg",
+    "results": []
+  },
+  {
+    "title": "Pygmalion #10",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult", "series_pygmalion"],
+    "filename": "series/pygmalion/Pygmalion-10.jpg",
+    "results": []
+  }  
 ]
