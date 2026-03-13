@@ -63,6 +63,9 @@
     lightboxOpen: false,
     lightboxList: /** @type {any[]} */ ([]),
     lightboxIndex: 0,
+
+    // Deep-link handling (from URL)
+    pendingDeepLink: /** @type {{seriesId: string|null, photoId: string|null}|null} */ (null),
   };
 
   // --- Data
@@ -96,7 +99,11 @@
     setupGate();
 
     renderStaticBits();
+    // Apply deep-link state (if any) after we have data + UI.
+    applyUrlState();
     render();
+    // If a deep-link requested a specific photo, open it now.
+    openDeepLinkedPhotoIfNeeded();
   }
 
   // --- Data loading
@@ -158,6 +165,18 @@
   // --- Gate
   function setupGate() {
     const gateEnabled = !!config.gate?.enabled;
+
+    // If the URL contains a deep-link (?photo=... or ?series=...), skip the gate.
+    // This is important for shareable direct links.
+    const params = new URLSearchParams(window.location.search);
+    const hasDeepLink = params.has('photo') || params.has('series');
+    if (hasDeepLink) {
+      state.gateAccepted = true;
+      state.adultAllowed = true;
+      openApp();
+      els.gate.classList.add('hidden');
+      return;
+    }
 
     // Configure gate visuals
     if (els.gateBg && config.gate?.backgroundImage) {
@@ -373,6 +392,8 @@
         state.selectedSeriesId = null;
         state.selectedAlbumId = String(album.id);
         state.page = 1;
+        // Navigating normally should reset the URL to the clean base.
+        clearAllUrlParams();
         closeMobileSidebar();
         render();
       });
@@ -391,6 +412,7 @@
       state.view = 'seriesMeta';
       state.selectedSeriesId = null;
       state.page = 1;
+      clearAllUrlParams();
       closeMobileSidebar();
       render();
     });
@@ -407,6 +429,7 @@
         state.view = 'seriesGallery';
         state.selectedSeriesId = sr.id;
         state.page = 1;
+        setSeriesUrl(sr.id);
         closeMobileSidebar();
         render();
       });
@@ -429,6 +452,7 @@
         state.view = 'seriesMeta';
         state.selectedSeriesId = null;
         state.page = 1;
+        clearAllUrlParams();
         render();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
@@ -749,6 +773,7 @@ function render() {
       state.view = 'seriesGallery';
       state.selectedSeriesId = sr.id;
       state.page = 1;
+      setSeriesUrl(sr.id);
       render();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -986,6 +1011,9 @@ function render() {
     state.lightboxIndex = idx;
     state.lightboxOpen = true;
 
+    // Update URL for direct sharing while the lightbox is open.
+    setPhotoUrl(photo);
+
     updateLightbox();
 
     els.lightbox.classList.remove('hidden');
@@ -996,6 +1024,9 @@ function render() {
     state.lightboxOpen = false;
     els.lightbox.classList.add('hidden');
     els.lightbox.setAttribute('aria-hidden', 'true');
+
+    // When closing the photo, restore the clean base URL (no params).
+    clearAllUrlParams({ replace: true });
   }
 
   function stepLightbox(delta) {
@@ -1096,5 +1127,105 @@ function render() {
     const stored = window.localStorage.getItem(config.storageKeys.lang);
     if (stored === 'hu' || stored === 'en') return stored;
     return 'hu';
+  }
+
+  // --- Deep links & URL helpers
+  function parseUrlState() {
+    const params = new URLSearchParams(window.location.search);
+    const seriesId = params.get('series');
+    const photoId = params.get('photo');
+    return {
+      seriesId: seriesId && seriesId.trim() ? seriesId.trim() : null,
+      photoId: photoId && photoId.trim() ? photoId.trim() : null,
+    };
+  }
+
+  function applyUrlState() {
+    const { seriesId, photoId } = parseUrlState();
+
+    // Store for later photo opening (after first render).
+    if (seriesId || photoId) {
+      state.pendingDeepLink = { seriesId, photoId };
+    } else {
+      state.pendingDeepLink = null;
+      return;
+    }
+
+    if (seriesId && data.seriesById.has(seriesId)) {
+      state.view = 'seriesGallery';
+      state.selectedSeriesId = seriesId;
+      state.page = 1;
+    } else {
+      // If series is invalid/missing, fall back to normal gallery.
+      state.view = 'photos';
+      state.selectedSeriesId = null;
+      state.page = 1;
+    }
+
+    // NOTE: we do not open the photo here; we do it after render.
+  }
+
+  function openDeepLinkedPhotoIfNeeded() {
+    const dl = state.pendingDeepLink;
+    if (!dl || !dl.photoId) return;
+
+    // Build the currently visible list (respecting series view, album, search)
+    const allVisiblePhotos = getVisiblePhotos();
+    const filtered = filterPhotosForCurrentView(allVisiblePhotos);
+
+    // Find the target photo by "id" or by a slug of filename/title.
+    const target = filtered.find((p) => getPhotoId(p) === dl.photoId);
+
+    if (target) {
+      openLightbox(filtered, target);
+    }
+
+    // Only try once.
+    state.pendingDeepLink = null;
+  }
+
+  function clearAllUrlParams({ replace = false } = {}) {
+    const clean = window.location.pathname;
+    if (replace) history.replaceState({}, '', clean);
+    else history.pushState({}, '', clean);
+  }
+
+  function setSeriesUrl(seriesId) {
+    // Keep only series param.
+    const url = new URL(window.location.href);
+    url.search = '';
+    url.searchParams.set('series', String(seriesId));
+    history.pushState({}, '', url.toString());
+  }
+
+  function setPhotoUrl(photo) {
+    const pid = getPhotoId(photo);
+    if (!pid) return;
+
+    const url = new URL(window.location.href);
+    // Drop existing params and set only photo for shareable link.
+    url.search = '';
+    url.searchParams.set('photo', pid);
+    history.pushState({}, '', url.toString());
+  }
+
+  function getPhotoId(photo) {
+    if (!photo) return '';
+    if (typeof photo.id === 'string' && photo.id.trim()) return photo.id.trim();
+
+    // Fallback: slugify filename without extension, else title.
+    const fn = typeof photo.filename === 'string' ? photo.filename : '';
+    const base = fn.replace(/\.[a-z0-9]+$/i, '');
+    const src = base.trim() ? base : textOf(photo.title);
+    return slugify(src);
+  }
+
+  function slugify(str) {
+    return String(str || '')
+      .toLowerCase()
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
   }
 })();
