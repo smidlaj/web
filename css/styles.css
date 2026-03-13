@@ -37,10 +37,27 @@ body {
   position: absolute;
   inset: 0;
   background-position: center;
-  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: contain; /* ne vágjon (no crop) */
+  background-color: #000;   /* üres részek feketék */
+
+  /*
+    Orientation-based splash background.
+    NOTE: These URLs are relative to css/styles.css.
+    Default: portrait (higher than wider) -> background_vert.png
+  */
+  background-image: url('../images/gate/background_vert.png') !important;
+
   /* "Splash" style: show the background photo crisp (no blur). */
   filter: none;
   transform: none;
+}
+
+@media (orientation: landscape) {
+  /* wider than higher -> background_horiz.png */
+  .gate__bg {
+    background-image: url('../images/gate/background_horiz.png') !important;
+  }
 }
 
 .gate::before {
