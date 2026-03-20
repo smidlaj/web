@@ -1973,13 +1973,103 @@
   },
   {
     "title": "Clothes in Delay Mode",
-    "models": [],
+    "models": ["shady"],
     "note": "",
     "tags": ["color", "adult", "balett"],
     "filename": "Clothes in Delay Mode.jpg",
     "results": [
       {
         "id": "FIAP 2026/194",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Dream",
+    "models": ["vali"],
+    "note": "",
+    "tags": ["color", "surreal"],
+    "filename": "Dream.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/159",
+        "accepted": true,
+        "awarded": true,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Dance in red",
+    "models": [],
+    "note": "",
+    "tags": ["color", "adult"],
+    "filename": "Dance in red.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/159",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Phases",
+    "models": ["shady"],
+    "note": "",
+    "tags": ["color", "adult", "balett"],
+    "filename": "Phases.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/159",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Blacksmith with dog",
+    "models": [],
+    "note": "",
+    "tags": ["color", "portrait"],
+    "filename": "Blacksmith with dog.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/159",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Medusa",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "portrait"],
+    "filename": "Medusa.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/159",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Behind the Curtain",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["color", "portrait", "adult"],
+    "filename": "Behind the Curtain.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/159",
         "accepted": true,
         "awarded": false,
         "awardName": null

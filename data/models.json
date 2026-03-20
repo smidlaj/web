@@ -54,7 +54,21 @@
         "links": ["https://www.instagram.com/na_dino98/"],
         "adultVisible": false,
         "visible": true          
-    }
+    },
+    {
+        "id": "shady",
+        "name": "Shady",
+        "links": [],
+        "adultVisible": true,
+        "visible": true          
+    },
+    {
+        "id": "Rebcsi",
+        "name": "Rebcsi",
+        "links": [],
+        "adultVisible": true,
+        "visible": true          
+    }   
 
     
 ]
