@@ -1970,5 +1970,20 @@
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-10.jpg",
     "results": []
-  }  
+  },
+  {
+    "title": "Clothes in Delay Mode",
+    "models": [],
+    "note": "",
+    "tags": ["color", "adult", "balett"],
+    "filename": "Clothes in Delay Mode.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/194",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  }
 ]

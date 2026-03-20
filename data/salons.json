@@ -442,5 +442,11 @@
         "year": 2025,
         "ids": ["FIAP 2025/304"],
         "country": "Szerbia"
-      }      
+      },
+      {
+        "name": "6-th Almaty Photo Awards",
+        "year": 2026,
+        "ids": ["FIAP 2026/194"],
+        "country": "Kazahsztán"
+      }
     ]
