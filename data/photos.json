@@ -1973,7 +1973,7 @@
   },
   {
     "title": "Clothes in Delay Mode",
-    "models": ["shady"],
+    "models": ["Garka", "shady"],
     "note": "",
     "tags": ["color", "adult", "balett"],
     "filename": "Clothes in Delay Mode.jpg",
@@ -2018,7 +2018,7 @@
   },
   {
     "title": "Phases",
-    "models": ["shady"],
+    "models": ["Garka", "shady"],
     "note": "",
     "tags": ["color", "adult", "balett"],
     "filename": "Phases.jpg",
