@@ -1983,6 +1983,12 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
+      },
+      {
+        "id": "FIAP 2026/038",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
       }      
     ]
   },
@@ -2004,7 +2010,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }    
+      },
+      {
+        "id": "FIAP 2026/039",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }   
     ]
   },
   {
@@ -2016,6 +2028,12 @@
     "results": [
       {
         "id": "FIAP 2026/159",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2026/039",
         "accepted": true,
         "awarded": false,
         "awardName": null
@@ -2100,7 +2118,19 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }      
+      },
+      {
+        "id": "FIAP 2026/037",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2026/038",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
     ]
   },
   {
@@ -2127,6 +2157,36 @@
     "results": [
       {
         "id": "FIAP 2026/203",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Bunny",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Bunny.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/038",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Covered Vision",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Covered Vision.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/038",
         "accepted": true,
         "awarded": false,
         "awardName": null

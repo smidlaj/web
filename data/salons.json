@@ -466,7 +466,31 @@
         "year": 2026,
         "ids": ["FIAP 2026/203"],
         "country": "Szerbia"
-      } 
+      },
+      {
+        "name": "German International Photocup 2026 - Filder",
+        "year": 2026,
+        "ids": ["FIAP 2026/037"],
+        "country": "Németország"
+      },
+      {
+        "name": "German International Photocup 2026 - Kochertal",
+        "year": 2026,
+        "ids": ["FIAP 2026/038"],
+        "country": "Németország"
+      },
+      {
+        "name": "German International Photocup 2026 - Neckartal",
+        "year": 2026,
+        "ids": ["FIAP 2026/039"],
+        "country": "Németország"
+      },
+      {
+        "name": "German International Photocup 2026 - Remstal",
+        "year": 2026,
+        "ids": ["FIAP 2026/040"],
+        "country": "Németország"
+      }
 ]
     
     
