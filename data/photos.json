@@ -1998,7 +1998,13 @@
         "accepted": true,
         "awarded": true,
         "awardName": null
-      }      
+      },
+      {
+        "id": "FIAP 2026/080",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }    
     ]
   },
   {
@@ -2025,6 +2031,12 @@
     "results": [
       {
         "id": "FIAP 2026/159",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2026/080",
         "accepted": true,
         "awarded": false,
         "awardName": null
@@ -2070,6 +2082,21 @@
     "results": [
       {
         "id": "FIAP 2026/159",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Portrait of Medusa",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "portrait"],
+    "filename": "Portrait of Medusa.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/080",
         "accepted": true,
         "awarded": false,
         "awardName": null

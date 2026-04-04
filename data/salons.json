@@ -454,5 +454,11 @@
         "year": 2026,
         "ids": ["FIAP 2026/159"],
         "country": "Kongó"
-      }      
+      },
+      {
+        "name": "Swedish International Exhibition of Photography 2026",
+        "year": 2026,
+        "ids": ["FIAP 2026/080"],
+        "country": "Svédország"
+      } 
     ]
