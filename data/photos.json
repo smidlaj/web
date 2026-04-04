@@ -1979,6 +1979,13 @@
     "filename": "Clothes in Delay Mode.jpg",
     "results": [
       {
+        "id": "FIAP 2026/211",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "ICE Gold",
+        "certificateImage": "FIAP_2026_211/69.pdf"
+      },    
+      {
         "id": "FIAP 2026/194",
         "accepted": true,
         "awarded": false,
@@ -2016,7 +2023,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }   
+      },
+      {
+        "id": "FIAP 2026/211",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      } 
     ]
   },
   {
@@ -2037,7 +2050,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }      
+      },
+      {
+        "id": "FIAP 2026/211",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
     ]
   },
   {
@@ -2130,6 +2149,12 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
+      },
+      {
+        "id": "FIAP 2026/211",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
       }
     ]
   },
@@ -2175,7 +2200,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }      
+      },
+      {
+        "id": "FIAP 2026/211",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }    
     ]
   },
   {
@@ -2190,7 +2221,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }      
+      },
+      {
+        "id": "FIAP 2026/211",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }    
     ]
   }
 ]
