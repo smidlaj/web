@@ -2092,11 +2092,41 @@
     "title": "Portrait of Medusa",
     "models": [],
     "note": "",
-    "tags": ["bw", "portrait"],
+    "tags": ["bw", "portrait", "adult"],
     "filename": "Portrait of Medusa.jpg",
     "results": [
       {
         "id": "FIAP 2026/080",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Natural Bond",
+    "models": [],
+    "note": "",
+    "tags": ["bw", "adult"],
+    "filename": "Natural Bond.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/203",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  },
+  {
+    "title": "Fruit of the Vine",
+    "models": ["lucfenyo"],
+    "note": "",
+    "tags": ["color", "portrait"],
+    "filename": "Fruit of the Vine.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/203",
         "accepted": true,
         "awarded": false,
         "awardName": null

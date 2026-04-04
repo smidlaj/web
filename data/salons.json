@@ -460,5 +460,13 @@
         "year": 2026,
         "ids": ["FIAP 2026/080"],
         "country": "Svédország"
+      },
+      {
+        "name": "CORSICA 2026",
+        "year": 2026,
+        "ids": ["FIAP 2026/203"],
+        "country": "Szerbia"
       } 
-    ]
+]
+    
+    
