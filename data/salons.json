@@ -526,6 +526,12 @@
         "year": 2026,
         "ids": ["FIAP 2026/202"],
         "country": "Nepál"
+      },
+      {
+        "name": "RefleX 2026",
+        "year": 2026,
+        "ids": ["FIAP 2026/082"],
+        "country": "Montenegró"
       }
 ]
     
