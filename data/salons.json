@@ -496,6 +496,30 @@
         "year": 2026,
         "ids": ["FIAP 2026/211"],
         "country": "Ízland"
+      },
+      {
+        "name": "2nd APJ International Salon 2026",
+        "year": 2026,
+        "ids": ["FIAP 2026/109"],
+        "country": "India"
+      },
+      {
+        "name": "Victory Circuit 2026 - Perasto",
+        "year": 2026,
+        "ids": ["FIAP 2026/097"],
+        "country": "Montenegró"
+      },
+      {
+        "name": "Victory Circuit 2026 - Cacak",
+        "year": 2026,
+        "ids": ["FIAP 2026/098"],
+        "country": "Szerbia"
+      },
+      {
+        "name": "Victory Circuit 2026 - Mladost",
+        "year": 2026,
+        "ids": ["FIAP 2026/099"],
+        "country": "Montenegró"
       }
 ]
     

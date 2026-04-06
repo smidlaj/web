@@ -1996,7 +1996,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      }      
+      },
+      {
+        "id": "FIAP 2026/109",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
     ]
   },
   {
@@ -2029,7 +2035,13 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
-      } 
+      },
+      {
+        "id": "FIAP 2026/109",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }
     ]
   },
   {
@@ -2056,6 +2068,19 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
+      },
+      {
+        "id": "FIAP 2026/098",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2026/097",
+        "accepted": true,
+        "awarded": true,
+        "awardName": "FIAP Gold medal",
+        "certificateImage": "FIAP_2026_097/A2-Dance.in.red-VICTORY.CIRCUIT.2026-Salon.PERASTO-Award.jpg"
       }
     ]
   },
@@ -2089,6 +2114,12 @@
     "results": [
       {
         "id": "FIAP 2026/159",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2026/098",
         "accepted": true,
         "awarded": false,
         "awardName": null
@@ -2170,6 +2201,12 @@
         "accepted": true,
         "awarded": false,
         "awardName": null
+      },
+      {
+        "id": "FIAP 2026/097",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
       }      
     ]
   },
@@ -2229,5 +2266,43 @@
         "awardName": null
       }    
     ]
-  }
+  },
+  
+  {
+    "title": "Weightless",
+    "models": ["shady"],
+    "note": "",
+    "tags": ["color", "adult", "balett"],
+    "filename": "Weightless.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/098",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }    
+    ]
+  },
+  
+  {
+    "title": "Dance in the Void",
+    "models": ["shady"],
+    "note": "",
+    "tags": ["bw", "adult", "balett"],
+    "filename": "Dance in the Void.jpg",
+    "results": [
+      {
+        "id": "FIAP 2026/097",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      },
+      {
+        "id": "FIAP 2026/099",
+        "accepted": true,
+        "awarded": false,
+        "awardName": null
+      }      
+    ]
+  }  
 ]
