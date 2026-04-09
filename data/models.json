@@ -75,6 +75,13 @@
         "links": ["https://www.instagram.com/garkatka/"],
         "adultVisible": true,
         "visible": true          
+    },
+    {
+        "id": "Panni",
+        "name": "Panni",
+        "links": [],
+        "adultVisible": true,
+        "visible": true          
     } 
 
     

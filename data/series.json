@@ -8,5 +8,15 @@
     "tag": "series_pygmalion",
     "visible": true,
     "order": 1
-  }
+  },
+  {
+    "id": "sappho",
+    "title": {"hu": "Szaffó és a múzsa", "en": "Sappho and the Muse"},
+    "note": {"hu": "", "en": ""},
+    "models": ["Panni", "lucfenyo"],
+    "cover": "series/sappho/cover.jpg",
+    "tag": "series_sappho",
+    "visible": true,
+    "order": 1
+  }  
 ]

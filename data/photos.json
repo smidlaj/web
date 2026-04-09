@@ -1530,7 +1530,7 @@
   },
   {
     "title": "Panna with hat",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["color", "adult"],
     "filename": "Panna with hat.jpg",
@@ -1893,7 +1893,7 @@
 
   {
     "title": "Pygmalion #1",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-01.jpg",
@@ -1901,7 +1901,7 @@
   },
   {
     "title": "Pygmalion #2",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-02.jpg",
@@ -1909,7 +1909,7 @@
   },
   {
     "title": "Pygmalion #3",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-03.jpg",
@@ -1917,7 +1917,7 @@
   },
   {
     "title": "Pygmalion #4",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-04.jpg",
@@ -1925,7 +1925,7 @@
   },
   {
     "title": "Pygmalion #5",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-05.jpg",
@@ -1933,7 +1933,7 @@
   },
   {
     "title": "Pygmalion #6",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-06.jpg",
@@ -1941,7 +1941,7 @@
   },
   {
     "title": "Pygmalion #7",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-07.jpg",
@@ -1949,7 +1949,7 @@
   },
   {
     "title": "Pygmalion #8",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-08.jpg",
@@ -1957,7 +1957,7 @@
   },
   {
     "title": "Pygmalion #9",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-09.jpg",
@@ -1965,7 +1965,7 @@
   },
   {
     "title": "Pygmalion #10",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult", "series_pygmalion"],
     "filename": "series/pygmalion/Pygmalion-10.jpg",
@@ -2052,7 +2052,7 @@
   },
   {
     "title": "Dance in red",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["color", "adult"],
     "filename": "Dance in red.jpg",
@@ -2308,7 +2308,7 @@
   },
   {
     "title": "Covered Vision",
-    "models": [],
+    "models": ["Panni"],
     "note": "",
     "tags": ["bw", "adult"],
     "filename": "Covered Vision.jpg",
@@ -2408,5 +2408,86 @@
         "awardName": null
       }     
     ]
+  },
+  
+  {
+    "title": "Sappho and the Muse #1",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 01.jpg",
+    "results": []
+  },
+  {
+    "title": "Sappho and the Muse #2",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 02.jpg",
+    "results": []
+  },
+  {
+    "title": "Sappho and the Muse #3",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 03.jpg",
+    "results": []
+  },
+  {
+    "title": "Sappho and the Muse #4",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 04.jpg",
+    "results": []
+  },
+  {
+    "title": "Sappho and the Muse #5",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 05.jpg",
+    "results": []
+  },
+  {
+    "title": "Sappho and the Muse #6",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 06.jpg",
+    "results": []
+  },
+  {
+    "title": "Sappho and the Muse #7",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 07.jpg",
+    "results": []
+  },
+  {
+    "title": "Sappho and the Muse #8",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 08.jpg",
+    "results": []
+  },
+  {
+    "title": "Sappho and the Muse #9",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 09.jpg",
+    "results": []
+  },
+  {
+    "title": "Sappho and the Muse #10",
+    "models": ["Panni", "lucfenyo"],
+    "note": "",
+    "tags": ["color", "adult", "series_sappho"],
+    "filename": "series/sappho/Sappho and the Muse - 10.jpg",
+    "results": []
   }  
 ]
