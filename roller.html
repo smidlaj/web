@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Nyúl Kerülő 8-bit - Rolleres mini játék</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: #0d1117;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      background: #0d1117;
+      cursor: none;
+      touch-action: none;
+      user-select: none;
+    }
+    .hint {
+      position: fixed;
+      left: 10px;
+      bottom: 8px;
+      color: rgba(255,255,255,.45);
+      font: 11px/1.2 monospace;
+      pointer-events: none;
+      text-shadow: 0 1px #000;
+    }
+  </style>
+</head>
+<body>
+<canvas id="game" aria-label="Nyúl Kerülő 8-bit rolleres játék"></canvas>
+<div class="hint">Nyilak / A-D: sávváltás · Space/Enter: start/újra · M: hang</div>
+<script>
+(() => {
+  "use strict";
+
+  const canvas = document.getElementById("game");
+  const ctx = canvas.getContext("2d", { alpha: false });
+
+  // Low internal resolution. CSS stretches this to the whole browser window.
+  const W = 384;
+  const H = 216;
+  canvas.width = W;
+  canvas.height = H;
+  ctx.imageSmoothingEnabled = false;
+
+  const ROAD_HORIZON = 68;
+  const PLAYER_HIT_Z = 0.18;
+  const SCOOTER_LANE_SPREAD = 68; // Larger visible left/right handlebar shift.
+  const MAX_DPR_SIDE_EFFECTS = 1;
+
+  const palette = {
+    sky1: "#9fd7ea",
+    sky2: "#7db7d0",
+    sun: "#ffe08a",
+    sun2: "#f8a85b",
+    field: "#8b6a45",
+    field2: "#5d432d",
+    field3: "#c49a65",
+    grass: "#4f8a38",
+    grass2: "#2f6a2e",
+    tree: "#1f4a32",
+    tree2: "#163220",
+    road: "#a39382",
+    road2: "#8d7f72",
+    road3: "#695f56",
+    roadEdge: "#d0b98f",
+    dark: "#10131a",
+    uiDark: "#18202d",
+    uiMid: "#2b3c54",
+    uiLight: "#d8f1ff",
+    red: "#b3373f",
+    redDark: "#631c27",
+    yellow: "#f6d15a",
+    white: "#f7f3df",
+    black: "#111117"
+  };
+
+  const state = {
+    mode: "title",
+    playerLane: 1,
+    laneVisual: 1,
+    score: 0,
+    highScore: Number(localStorage.getItem("nyulKeruloHighScore") || 0),
+    obstacles: [],
+    spawnTimer: 0,
+    nextSpawn: 1.0,
+    elapsed: 0,
+    speed: 0.42,
+    shake: 0,
+    flash: 0,
+    muted: false,
+    lastTime: 0,
+    dustTick: 0,
+    roadSeed: makeRoadSeed()
+  };
+
+  const obstacleTypes = ["rock", "log", "rabbit", "jumpRabbit"];
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function rnd(min, max) { return min + Math.random() * (max - min); }
+  function choose(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function iround(v) { return Math.round(v); }
+
+  function fill(x, y, w, h, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(iround(x), iround(y), Math.ceil(w), Math.ceil(h));
+  }
+
+  function poly(points, color) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(iround(points[0][0]), iround(points[0][1]));
+    for (let i = 1; i < points.length; i++) ctx.lineTo(iround(points[i][0]), iround(points[i][1]));
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function line(x1, y1, x2, y2, color, width = 1) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.beginPath();
+    ctx.moveTo(iround(x1), iround(y1));
+    ctx.lineTo(iround(x2), iround(y2));
+    ctx.stroke();
+  }
+
+  function text(txt, x, y, color = palette.uiLight, size = 8, align = "left") {
+    ctx.font = `${size}px monospace`;
+    ctx.textAlign = align;
+    ctx.textBaseline = "top";
+    ctx.fillStyle = "#0c1018";
+    ctx.fillText(txt, iround(x + 1), iround(y + 1));
+    ctx.fillStyle = color;
+    ctx.fillText(txt, iround(x), iround(y));
+  }
+
+  function makeRoadSeed() {
+    const pebbles = [];
+    for (let i = 0; i < 80; i++) {
+      pebbles.push({
+        z: Math.random(),
+        side: Math.random() * 2 - 1,
+        laneWobble: Math.random() * 2 - 1,
+        c: Math.random() < 0.55 ? palette.road2 : palette.road3
+      });
+    }
+    const furrows = [];
+    for (let i = 0; i < 34; i++) {
+      furrows.push({
+        y: Math.random(),
+        x: Math.random(),
+        len: rnd(10, 40),
+        c: Math.random() < 0.5 ? palette.field2 : palette.field3
+      });
+    }
+    return { pebbles, furrows };
+  }
+
+  // Simple procedural pixel sound effects; only starts after user input.
+  let audioCtx = null;
+  function beep(freq = 440, duration = 0.06, type = "square", gain = 0.05) {
+    if (state.muted) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.value = freq;
+      g.gain.value = gain;
+      osc.connect(g);
+      g.connect(audioCtx.destination);
+      const now = audioCtx.currentTime;
+      g.gain.setValueAtTime(gain, now);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      osc.start(now);
+      osc.stop(now + duration + 0.02);
+    } catch (_) { /* Audio is optional. */ }
+  }
+
+  function startGame() {
+    state.mode = "playing";
+    state.playerLane = 1;
+    state.laneVisual = 1;
+    state.score = 0;
+    state.obstacles = [];
+    state.spawnTimer = 0.15;
+    state.nextSpawn = 0.55;
+    state.elapsed = 0;
+    state.speed = 0.42;
+    state.shake = 0;
+    state.flash = 0;
+    state.dustTick = 0;
+    state.roadSeed = makeRoadSeed();
+    beep(520, 0.05, "square", 0.04);
+    setTimeout(() => beep(780, 0.05, "square", 0.04), 60);
+  }
+
+  function crash() {
+    if (state.mode !== "playing") return;
+    state.mode = "gameover";
+    state.shake = 12;
+    state.flash = 1;
+    state.highScore = Math.max(state.highScore, state.score);
+    localStorage.setItem("nyulKeruloHighScore", String(state.highScore));
+    beep(100, 0.22, "sawtooth", 0.08);
+    setTimeout(() => beep(70, 0.28, "sawtooth", 0.06), 90);
+  }
+
+  function changeLane(dir) {
+    if (state.mode !== "playing") return;
+    const old = state.playerLane;
+    state.playerLane = clamp(state.playerLane + dir, 0, 2);
+    if (old !== state.playerLane) {
+      state.shake = Math.max(state.shake, 2.5);
+      beep(300 + state.playerLane * 80, 0.035, "square", 0.03);
+    }
+  }
+
+  function spawnObstacle() {
+    const lane = Math.floor(Math.random() * 3);
+    let type;
+    const r = Math.random();
+    if (state.score < 3) type = choose(["rock", "log", "rabbit"]);
+    else if (r < 0.24) type = "jumpRabbit";
+    else if (r < 0.48) type = "rabbit";
+    else if (r < 0.72) type = "log";
+    else type = "rock";
+
+    state.obstacles.push({
+      id: Math.random().toString(36).slice(2),
+      lane,
+      type,
+      z: 1.06,
+      passed: false,
+      wobble: Math.random() * Math.PI * 2,
+      bornAt: state.elapsed
+    });
+  }
+
+  function project(laneIndex, z) {
+    const visibleZ = clamp(z, -0.05, 1.05);
+    const t = clamp(1 - visibleZ, 0, 1.12);
+    const tt = Math.pow(t, 1.52);
+    const y = ROAD_HORIZON + tt * (H - ROAD_HORIZON + 42);
+    const roadHalf = 21 + Math.pow(t, 1.18) * 178;
+    const laneOffset = (laneIndex - 1) * roadHalf * 0.46;
+    const x = W / 2 + laneOffset;
+    const unit = Math.max(1, Math.floor(1 + t * 5.2));
+    const shadow = Math.max(2, Math.floor(3 + t * 22));
+    return { x, y, t, roadHalf, unit, shadow };
+  }
+
+  function update(dt) {
+    if (state.mode !== "playing") {
+      state.laneVisual += (state.playerLane - state.laneVisual) * Math.min(1, dt * 10);
+      state.shake = Math.max(0, state.shake - dt * 18);
+      state.flash = Math.max(0, state.flash - dt * 2.4);
+      return;
+    }
+
+    state.elapsed += dt;
+    state.dustTick += dt;
+    state.speed = 0.43 + Math.min(0.28, state.score * 0.008) + Math.min(0.18, state.elapsed * 0.004);
+    state.spawnTimer -= dt;
+    state.laneVisual += (state.playerLane - state.laneVisual) * Math.min(1, dt * 11);
+    state.shake = Math.max(0, state.shake - dt * 20);
+    state.flash = Math.max(0, state.flash - dt * 3);
+
+    if (state.spawnTimer <= 0) {
+      spawnObstacle();
+      const pressure = Math.min(0.42, state.score * 0.01 + state.elapsed * 0.002);
+      state.nextSpawn = rnd(0.82, 1.38) - pressure;
+      state.spawnTimer = Math.max(0.62, state.nextSpawn);
+    }
+
+    for (const ob of state.obstacles) {
+      const jumpPush = ob.type === "jumpRabbit" ? 0.035 * Math.sin((state.elapsed - ob.bornAt) * 9) : 0;
+      ob.z -= (state.speed + jumpPush) * dt;
+
+      if (!ob.passed && ob.z <= PLAYER_HIT_Z) {
+        ob.passed = true;
+        if (ob.lane === state.playerLane) {
+          crash();
+        } else {
+          state.score += 1;
+          state.highScore = Math.max(state.highScore, state.score);
+          beep(820 + (state.score % 5) * 60, 0.045, "square", 0.035);
+        }
+      }
+    }
+    state.obstacles = state.obstacles.filter(ob => ob.z > -0.18);
+  }
+
+  function drawSky() {
+    fill(0, 0, W, 22, "#b7e5ef");
+    fill(0, 22, W, 22, palette.sky1);
+    fill(0, 44, W, 24, palette.sky2);
+    fill(0, 62, W, 11, "#e8c888");
+
+    // Sun and retro blocky glow.
+    fill(W - 78, 21, 32, 5, "#ffd184");
+    fill(W - 82, 26, 42, 6, "#ffc46c");
+    fill(W - 86, 32, 50, 5, "#f8b05e");
+    fill(W - 72, 17, 21, 21, palette.sun);
+    fill(W - 66, 13, 9, 29, "#ffeab4");
+    fill(W - 76, 22, 29, 9, "#fff0bd");
+
+    // Pixel clouds.
+    fill(36, 18, 22, 5, "#d9f3f4");
+    fill(58, 16, 26, 7, "#d9f3f4");
+    fill(84, 19, 18, 4, "#d9f3f4");
+    fill(164, 24, 28, 4, "#ccebf0");
+    fill(192, 22, 18, 6, "#ccebf0");
+  }
+
+  function drawFields() {
+    // Left greenery and tree wall.
+    fill(0, ROAD_HORIZON - 4, W, 20, "#6d8d4d");
+    fill(0, ROAD_HORIZON + 3, W, H - ROAD_HORIZON, palette.grass);
+    for (let i = 0; i < 18; i++) {
+      const x = i * 22 + ((Math.floor(state.elapsed * 12) % 22) * 0.05);
+      const h = 9 + (i % 4) * 5;
+      fill(x - 6, ROAD_HORIZON - h + 6, 28, h, i % 2 ? palette.tree : palette.tree2);
+      fill(x + 5, ROAD_HORIZON - h - 5, 12, h + 8, i % 2 ? "#255e3c" : "#1c422d");
+    }
+    fill(0, ROAD_HORIZON + 13, 95, H - ROAD_HORIZON, palette.grass2);
+    fill(0, ROAD_HORIZON + 24, 72, H - ROAD_HORIZON, "#2b582a");
+
+    // Right ploughed field as a perspective trapezoid.
+    poly([[217, ROAD_HORIZON + 6], [W, ROAD_HORIZON - 1], [W, H], [244, H]], palette.field);
+    const phase = (state.elapsed * state.speed * 15) % 18;
+    for (let i = -2; i < 26; i++) {
+      const y = ROAD_HORIZON + 8 + i * 7 + phase * (0.18 + i * 0.006);
+      const x1 = 225 + i * 1.2;
+      line(x1, y, W + 20, y + i * 5.5, i % 2 ? palette.field2 : palette.field3, 2);
+    }
+    for (const f of state.roadSeed.furrows) {
+      const y = ROAD_HORIZON + 4 + ((f.y + state.elapsed * 0.035) % 1) * 130;
+      const x = 236 + f.x * 142;
+      fill(x, y, f.len, 2, f.c);
+    }
+
+    // Roadside grass strips.
+    poly([[155, ROAD_HORIZON], [177, ROAD_HORIZON], [19, H], [-8, H]], "#466e33");
+    poly([[207, ROAD_HORIZON], [230, ROAD_HORIZON + 2], [W + 10, H], [332, H]], "#6c7a36");
+    for (let i = 0; i < 26; i++) {
+      const y = ROAD_HORIZON + i * 6 + ((state.elapsed * 28) % 6);
+      const leftX = 145 - i * 2.7;
+      const rightX = 218 + i * 3.1;
+      fill(leftX + (i % 3), y, 2, 5, i % 2 ? "#76a147" : "#345f2e");
+      fill(rightX - (i % 2), y + 1, 2, 4, i % 2 ? "#91a557" : "#5c7134");
+    }
+  }
+
+  function drawRoad() {
+    const cx = W / 2;
+    // Road body.
+    poly([[cx - 23, ROAD_HORIZON], [cx + 24, ROAD_HORIZON], [W + 24, H + 18], [-24, H + 18]], palette.road);
+    // Edge highlights.
+    poly([[cx - 27, ROAD_HORIZON], [cx - 23, ROAD_HORIZON], [-24, H + 18], [-38, H + 18]], palette.roadEdge);
+    poly([[cx + 24, ROAD_HORIZON], [cx + 28, ROAD_HORIZON], [W + 38, H + 18], [W + 22, H + 18]], "#807057");
+
+    // Tire tracks and lane guides.
+    const guides = [-0.48, 0, 0.48];
+    for (const g of guides) {
+      const nearHalf = 170 * g;
+      line(cx + 13 * g, ROAD_HORIZON + 2, cx + nearHalf, H + 12, g === 0 ? "#7d7168" : "#8a7c70", g === 0 ? 1 : 2);
+    }
+    line(cx - 6, ROAD_HORIZON + 1, 82, H + 10, "#b7a392", 1);
+    line(cx + 7, ROAD_HORIZON + 1, 302, H + 10, "#796c61", 1);
+
+    // Moving road pebbles and cracks.
+    for (const p of state.roadSeed.pebbles) {
+      const loopZ = (p.z + state.elapsed * state.speed * 0.29) % 1;
+      const z = 1 - loopZ;
+      const pr = project(1, z);
+      if (pr.t < 0.05) continue;
+      const roadHalf = pr.roadHalf * 0.86;
+      const x = W / 2 + p.side * roadHalf + p.laneWobble * pr.t * 4;
+      const y = pr.y;
+      const s = Math.max(1, Math.floor(pr.t * 3));
+      if (x > 18 && x < W - 18 && y > ROAD_HORIZON && y < H) fill(x, y, s + (p.side > 0.8 ? 1 : 0), 1, p.c);
+    }
+
+    // Speed streaks close to the rider.
+    const streakPhase = (state.elapsed * 44) % 22;
+    for (let i = 0; i < 9; i++) {
+      const y = 138 + i * 11 + streakPhase;
+      const spread = (y - ROAD_HORIZON) * 0.85;
+      if (y > H) continue;
+      line(W / 2 - spread, y, W / 2 - spread - 20, y + 5, "#7d7167", 1);
+      line(W / 2 + spread * 0.65, y + 3, W / 2 + spread * 0.65 + 16, y + 8, "#b1a08f", 1);
+    }
+  }
+
+  const sprites = {
+    rock: {
+      palette: { k: "#2a2a31", d: "#55545b", m: "#7a787b", l: "#aaa39a", s: "#1c1b1e" },
+      rows: [
+        "............",
+        "....kkkk....",
+        "..kkmmmlk...",
+        ".kmmmmmlkk..",
+        ".kdmmlmmmkk.",
+        "kddmmmmllmk.",
+        "kddddmmmkkk.",
+        ".kkkkkkkkk.."
+      ]
+    },
+    log: {
+      palette: { k: "#2a1710", d: "#5b331e", m: "#8b542b", l: "#c1844b", e: "#e0a15c", s: "#1c120d" },
+      rows: [
+        "...............",
+        "..kkkkkkkkkk...",
+        ".kmmmmmllmmmk..",
+        "kmedmmmdmmmlkk.",
+        "kmmmdmmmlmmmlek",
+        ".kllllmmmdddkk.",
+        "..kkkkkkkkkk..."
+      ]
+    },
+    rabbit: {
+      palette: { k: "#2c2b32", w: "#f0ead9", g: "#b7b0a7", p: "#e7a7a9", e: "#14141a", s: "#5d554f" },
+      rows: [
+        "....k..k....",
+        "...kw..wk...",
+        "...kwppwk...",
+        "...kwwwk....",
+        "....kwwk....",
+        "....kwewk...",
+        "...kwwwwk...",
+        "..kwwwwwwk..",
+        "..kwwggwwk..",
+        ".kwwggggwwk.",
+        ".kwwwwwwwwk.",
+        "..kwwwgwwk..",
+        "...kggggk...",
+        "..kkg..gkk..",
+        ".kks....skk.",
+        "............"
+      ]
+    },
+    jump0: {
+      palette: { k: "#2c2b32", w: "#f0ead9", g: "#b7b0a7", p: "#e7a7a9", e: "#14141a", s: "#5d554f" },
+      rows: [
+        ".....k..k.....",
+        "....kw..wk....",
+        "....kwppwk....",
+        ".....kwwk.....",
+        ".....kwewk....",
+        "....kwwwwk....",
+        "...kwwggwwk...",
+        "..kwwwwwwwwk..",
+        "..kggwwwwggk..",
+        "...kggggggk...",
+        "..kkk....kkk..",
+        ".kk........kk."
+      ]
+    },
+    jump1: {
+      palette: { k: "#2c2b32", w: "#f0ead9", g: "#b7b0a7", p: "#e7a7a9", e: "#14141a", s: "#5d554f" },
+      rows: [
+        "......k..k....",
+        ".....kw..wk...",
+        ".....kwppwk...",
+        "......kwwk....",
+        ".....kwewk....",
+        "....kwwwwk....",
+        "...kwwggwwk...",
+        "..kwwwwwwwwk..",
+        ".kkgwwwwwwgkk.",
+        "kks.kggggk.skk",
+        "....kk..kk....",
+        "...kk....kk..."
+      ]
+    },
+    jump2: {
+      palette: { k: "#2c2b32", w: "#f0ead9", g: "#b7b0a7", p: "#e7a7a9", e: "#14141a", s: "#5d554f" },
+      rows: [
+        "....k....k....",
+        "...kw....wk...",
+        "...kwp..pwk...",
+        "....kwwwwk....",
+        "....kweewk....",
+        "...kwwwwwwk...",
+        "..kwwggggwwk..",
+        ".kwwwwwwwwwwk.",
+        "kks.kggggk.skk",
+        "....kk..kk....",
+        "...kk....kk...",
+        "..kk......kk.."
+      ]
+    },
+    jump3: {
+      palette: { k: "#2c2b32", w: "#f0ead9", g: "#b7b0a7", p: "#e7a7a9", e: "#14141a", s: "#5d554f" },
+      rows: [
+        ".....k..k.....",
+        "....kw..wk....",
+        "....kwppwk....",
+        ".....kwwk.....",
+        ".....kwewk....",
+        "....kwwwwk....",
+        "...kwwggwwk...",
+        "..kwwwwwwwwk..",
+        "...kggggggk...",
+        "..kkg....gkk..",
+        ".kk........kk.",
+        "kks........skk"
+      ]
+    }
+  };
+
+  function drawSprite(sprite, centerX, bottomY, unit, yOffset = 0, flip = false) {
+    const rows = sprite.rows;
+    const h = rows.length;
+    const w = Math.max(...rows.map(r => r.length));
+    const x0 = Math.round(centerX - (w * unit) / 2);
+    const y0 = Math.round(bottomY - h * unit + yOffset);
+    const pal = sprite.palette;
+    for (let r = 0; r < h; r++) {
+      const row = rows[r];
+      for (let c = 0; c < row.length; c++) {
+        const ch = row[flip ? row.length - 1 - c : c];
+        if (ch === "." || ch === " ") continue;
+        ctx.fillStyle = pal[ch] || "#ff00ff";
+        ctx.fillRect(x0 + c * unit, y0 + r * unit, unit, unit);
+      }
+    }
+  }
+
+  function drawObstacles() {
+    const sorted = [...state.obstacles].sort((a, b) => b.z - a.z);
+    for (const ob of sorted) {
+      if (ob.z > 1.04) continue;
+      const pr = project(ob.lane, ob.z);
+      if (pr.y < ROAD_HORIZON || pr.y > H + 36) continue;
+
+      // A dark ellipse-like block shadow, still pixelated.
+      const shadowW = pr.shadow * (ob.type === "log" ? 1.8 : 1.1);
+      fill(pr.x - shadowW / 2, pr.y - 1, shadowW, Math.max(1, Math.floor(pr.unit * 0.75)), "rgba(30,25,22,.48)");
+
+      if (ob.type === "rock") {
+        drawSprite(sprites.rock, pr.x, pr.y, pr.unit);
+      } else if (ob.type === "log") {
+        drawSprite(sprites.log, pr.x, pr.y + pr.unit, pr.unit);
+      } else if (ob.type === "rabbit") {
+        const bob = Math.sin(state.elapsed * 8 + ob.wobble) * Math.max(0, pr.unit - 1);
+        drawSprite(sprites.rabbit, pr.x, pr.y, pr.unit, bob);
+      } else if (ob.type === "jumpRabbit") {
+        const f = Math.floor(((state.elapsed - ob.bornAt) * 7.5) % 4);
+        const hop = [0, -4, -8, -3][f] * pr.unit;
+        const forwardKick = Math.sin((state.elapsed - ob.bornAt) * 12) * pr.unit * 0.5;
+        drawSprite(sprites[`jump${f}`], pr.x + forwardKick, pr.y, pr.unit, hop, Math.sin(ob.wobble) > 0);
+      }
+
+      // Tiny warning glint for incoming jumping rabbit.
+      if (ob.type === "jumpRabbit" && ob.z > 0.55) {
+        fill(pr.x - 2, pr.y - 18, 4, 2, palette.yellow);
+      }
+    }
+  }
+
+  function drawScooter() {
+    const wob = Math.sin(state.elapsed * 16) * (state.mode === "playing" ? 1.4 : 0.4);
+    // Visual lane movement now matches the logical lane used for collisions:
+    // left lane -> screen left, center -> center, right lane -> screen right.
+    const targetX = W / 2 + (state.laneVisual - 1) * SCOOTER_LANE_SPREAD;
+    const baseY = H - 25;
+
+    // Front deck and display.
+    fill(targetX - 18, baseY + 4, 36, 8, "#10131b");
+    fill(targetX - 13, baseY, 26, 8, "#222a35");
+    fill(targetX - 9, baseY + 2, 18, 5, "#0e1f2e");
+    text(String(Math.floor(state.speed * 100)).padStart(2, "0"), targetX - 7, baseY + 1, "#75d7ff", 5);
+
+    // Stem.
+    fill(targetX - 2 + wob * 0.2, baseY - 31, 4, 35, "#151b24");
+    fill(targetX + 2 + wob * 0.2, baseY - 30, 2, 33, "#424957");
+
+    // Handlebar.
+    fill(targetX - 86 + wob, baseY - 25, 172, 6, "#10131b");
+    fill(targetX - 76 + wob, baseY - 28, 55, 9, "#202733");
+    fill(targetX + 21 + wob, baseY - 28, 55, 9, "#202733");
+    fill(targetX - 91 + wob, baseY - 31, 21, 13, "#0f1218");
+    fill(targetX + 70 + wob, baseY - 31, 21, 13, "#0f1218");
+    fill(targetX - 82 + wob, baseY - 28, 7, 3, palette.red);
+    fill(targetX + 75 + wob, baseY - 28, 7, 3, palette.red);
+
+    // Gloves / hands.
+    drawGlove(targetX - 91 + wob, baseY - 25, -1);
+    drawGlove(targetX + 91 + wob, baseY - 25, 1);
+
+    // Front wheel shadow.
+    fill(targetX - 9, H - 7, 18, 5, "#08090d");
+  }
+
+  function drawGlove(x, y, side) {
+    const s = side;
+    fill(x - 13 * (s < 0 ? 1 : 0), y - 2, 18, 12, "#0c0d13");
+    fill(x - 11 * (s < 0 ? 1 : 0), y, 15, 8, "#25293a");
+    fill(x - 9 * (s < 0 ? 1 : 0), y + 2, 11, 4, "#343b4c");
+    fill(x - 7 * (s < 0 ? 1 : 0), y - 1, 4, 2, palette.red);
+    fill(x - 3 * (s < 0 ? 1 : 0), y + 9, 7, 3, "#11131b");
+  }
+
+  function drawHUD() {
+    // Top-left score panel.
+    fill(8, 8, 88, 19, palette.uiDark);
+    fill(10, 10, 84, 15, palette.uiMid);
+    fill(12, 12, 10, 10, palette.yellow);
+    fill(14, 14, 6, 6, "#3b2b13");
+    text(`PONT ${state.score}`, 27, 12, palette.white, 8);
+
+    // Top-right best panel.
+    fill(W - 108, 8, 100, 19, palette.uiDark);
+    fill(W - 106, 10, 96, 15, palette.uiMid);
+    text(`REKORD ${state.highScore}`, W - 58, 12, palette.white, 8, "center");
+
+    // Lane indicator.
+    const bx = W / 2 - 28;
+    const by = 10;
+    fill(bx, by, 56, 16, "rgba(13,16,23,.72)");
+    for (let i = 0; i < 3; i++) {
+      fill(bx + 6 + i * 16, by + 5, 10, 6, i === state.playerLane ? palette.yellow : "#455268");
+    }
+  }
+
+  function drawTitleOverlay() {
+    fill(0, 0, W, H, "rgba(8,10,14,.45)");
+    fill(W / 2 - 128, 44, 256, 74, "#121823");
+    fill(W / 2 - 124, 48, 248, 66, "#26364c");
+    fill(W / 2 - 118, 54, 236, 54, "#111827");
+    text("NYÚL KERÜLŐ", W / 2, 62, palette.yellow, 18, "center");
+    text("8-BIT ROLLER", W / 2, 84, "#d8f1ff", 10, "center");
+    text("Bal / jobb nyíl: sávváltás", W / 2, 105, "#f7f3df", 8, "center");
+    text("Kerüld ki a köveket, rönköket és nyulakat!", W / 2, 119, "#b9cad8", 7, "center");
+    blinkText("SPACE VAGY ENTER A START", W / 2, 145, palette.white, 9, "center");
+  }
+
+  function drawGameOverOverlay() {
+    fill(0, 0, W, H, "rgba(63,14,24,.40)");
+    fill(W / 2 - 117, 55, 234, 77, "#1a1015");
+    fill(W / 2 - 112, 60, 224, 67, "#63202d");
+    fill(W / 2 - 106, 66, 212, 55, "#161923");
+    text("BUKTA!", W / 2, 72, "#ffdf72", 18, "center");
+    text(`Pontszám: ${state.score}   Rekord: ${state.highScore}`, W / 2, 98, "#f7f3df", 8, "center");
+    blinkText("SPACE / ENTER: új kör", W / 2, 116, "#d8f1ff", 8, "center");
+  }
+
+  function blinkText(txt, x, y, color, size, align) {
+    if (Math.floor(performance.now() / 360) % 2 === 0) text(txt, x, y, color, size, align);
+  }
+
+  function drawFlash() {
+    if (state.flash <= 0) return;
+    const a = Math.min(0.6, state.flash * 0.55);
+    fill(0, 0, W, H, `rgba(255,245,220,${a})`);
+  }
+
+  function render() {
+    ctx.save();
+    const sx = state.shake ? (Math.random() * 2 - 1) * state.shake : 0;
+    const sy = state.shake ? (Math.random() * 2 - 1) * state.shake * 0.6 : 0;
+    ctx.translate(Math.round(sx), Math.round(sy));
+
+    drawSky();
+    drawFields();
+    drawRoad();
+    drawObstacles();
+    drawScooter();
+    ctx.restore();
+
+    drawHUD();
+    if (state.mode === "title") drawTitleOverlay();
+    if (state.mode === "gameover") drawGameOverOverlay();
+    drawFlash();
+  }
+
+  function loop(ts) {
+    if (!state.lastTime) state.lastTime = ts;
+    const dt = Math.min(0.034, (ts - state.lastTime) / 1000);
+    state.lastTime = ts;
+    update(dt);
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener("keydown", (e) => {
+    if (["ArrowLeft", "ArrowRight", " ", "Enter", "KeyA", "KeyD", "KeyM"].includes(e.code)) e.preventDefault();
+    if (e.code === "ArrowLeft" || e.code === "KeyA") changeLane(-1);
+    if (e.code === "ArrowRight" || e.code === "KeyD") changeLane(1);
+    if (e.code === "Space" || e.code === "Enter") {
+      if (state.mode !== "playing") startGame();
+    }
+    if (e.code === "KeyM") {
+      state.muted = !state.muted;
+      if (!state.muted) beep(660, 0.04, "square", 0.03);
+    }
+  }, { passive: false });
+
+  // Simple touch support: tap left or right half to move; tap center to start/restart.
+  canvas.addEventListener("pointerdown", (e) => {
+    const x = e.clientX / Math.max(1, window.innerWidth);
+    if (state.mode !== "playing") {
+      startGame();
+      return;
+    }
+    if (x < 0.43) changeLane(-1);
+    else if (x > 0.57) changeLane(1);
+  });
+
+  // Keep the canvas visually full-screen even after device rotation or browser chrome changes.
+  function fit() {
+    const _ = MAX_DPR_SIDE_EFFECTS; // Keeps the intent explicit; CSS does the scaling.
+    ctx.imageSmoothingEnabled = false;
+  }
+  window.addEventListener("resize", fit);
+  fit();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
