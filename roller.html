@@ -35,17 +35,81 @@
       pointer-events: none;
       text-shadow: 0 1px #000;
     }
+    .menu-cover {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: min(6vw, 34px);
+      background-image:
+        linear-gradient(to bottom, rgba(0,0,0,.05), rgba(0,0,0,.08) 46%, rgba(0,0,0,.72)),
+        url("roller_assets/cover.png");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      image-rendering: pixelated;
+      cursor: pointer;
+      user-select: none;
+    }
+    .menu-cover.hidden { display: none; }
+    .menu-card {
+      width: min(620px, calc(100vw - 28px));
+      padding: 18px 20px 17px;
+      border: 3px solid #f7f3df;
+      background: rgba(12, 17, 27, .78);
+      color: #f7f3df;
+      text-align: center;
+      text-shadow: 2px 2px 0 #000;
+      box-shadow: 0 0 0 3px #26364c, 8px 8px 0 rgba(0,0,0,.36);
+      backdrop-filter: blur(2px);
+    }
+    .menu-card h1 {
+      margin: 0 0 8px;
+      color: #f6d15a;
+      font-size: clamp(25px, 4.4vw, 48px);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .menu-card p {
+      margin: 7px 0;
+      font-size: clamp(13px, 1.8vw, 18px);
+      line-height: 1.35;
+    }
+    .blink-text {
+      color: #d8f1ff;
+      animation: menuBlink .95s steps(2, start) infinite;
+    }
+    @keyframes menuBlink { 50% { opacity: .2; } }
+    @media (orientation: portrait) {
+      .menu-cover {
+        padding: 18px 14px max(24px, env(safe-area-inset-bottom));
+        background-image:
+          linear-gradient(to bottom, rgba(0,0,0,.02), rgba(0,0,0,.06) 48%, rgba(0,0,0,.78)),
+          url("roller_assets/cover_mobile.png");
+      }
+      .menu-card { padding: 15px 16px; }
+    }
   </style>
 </head>
 <body>
 <canvas id="game" aria-label="Nyúl Kerülő 8-bit rolleres játék"></canvas>
-<div class="hint">Nyilak / A-D: sávváltás · Space/Enter: start/újra · M: hang</div>
+<div class="hint">Nyilak / A-D: sávváltás · Space/Enter: start/újra · M: hang/zene</div>
+<div id="menuCover" class="menu-cover" aria-label="Főmenü: Nyúl Kerülő">
+  <div class="menu-card">
+    <h1>Nyúl Kerülő</h1>
+    <p>Bal / jobb nyíl vagy A-D: sávváltás. Kerüld ki az akadályokat és a nyulakat.</p>
+    <p class="blink-text">SPACE / ENTER vagy kattintás: start</p>
+  </div>
+</div>
 <script>
 (() => {
   "use strict";
 
   const canvas = document.getElementById("game");
   const ctx = canvas.getContext("2d", { alpha: false });
+  const menuCover = document.getElementById("menuCover");
 
   // Low internal resolution. CSS stretches this to the whole browser window.
   const W = 384;
@@ -85,6 +149,63 @@
     white: "#f7f3df",
     black: "#111117"
   };
+
+  const ASSET_ROOT = "roller_assets/";
+  const SPEED_START = 0.43;
+  const SPEED_MAX = 3.0;
+
+  function loadImage(src) {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = src;
+    return img;
+  }
+
+  function imageReady(img) {
+    return img && img.complete && img.naturalWidth > 0;
+  }
+
+  const images = {
+    scooter: loadImage(`${ASSET_ROOT}roller.png`),
+    stones: [1, 2, 3].map(i => loadImage(`${ASSET_ROOT}stone${i}.png`)),
+    woods: [1, 2, 3].map(i => loadImage(`${ASSET_ROOT}wood${i}.png`)),
+    rabbitRun: Array.from({ length: 8 }, (_, i) => loadImage(`${ASSET_ROOT}run/frame_${String(i).padStart(3, "0")}.png`)),
+    rabbitJump: Array.from({ length: 4 }, (_, i) => loadImage(`${ASSET_ROOT}jump/frame_${String(i).padStart(3, "0")}.png`))
+  };
+
+  const assetCrops = {
+    stones: [
+      { x: 22, y: 22, w: 212, h: 212 },
+      { x: 18, y: 21, w: 221, h: 217 },
+      { x: 28, y: 25, w: 200, h: 208 }
+    ],
+    woods: [
+      { x: 9, y: 33, w: 238, h: 203 },
+      { x: 5, y: 19, w: 250, h: 224 },
+      { x: 14, y: 27, w: 233, h: 202 }
+    ],
+    run: [
+      { x: 94, y: 67, w: 54, h: 103 },
+      { x: 94, y: 69, w: 54, h: 101 },
+      { x: 93, y: 66, w: 56, h: 108 },
+      { x: 94, y: 67, w: 54, h: 107 },
+      { x: 92, y: 66, w: 58, h: 113 },
+      { x: 92, y: 67, w: 58, h: 111 },
+      { x: 92, y: 67, w: 58, h: 111 },
+      { x: 92, y: 67, w: 58, h: 111 }
+    ],
+    jump: [
+      { x: 79, y: 59, w: 69, h: 120 },
+      { x: 94, y: 47, w: 70, h: 142 },
+      { x: 65, y: 49, w: 85, h: 155 },
+      { x: 79, y: 62, w: 97, h: 155 }
+    ]
+  };
+
+  const music = new Audio(`${ASSET_ROOT}game_music.mp3`);
+  music.loop = true;
+  music.volume = 0.28;
+  music.preload = "auto";
 
   const state = {
     mode: "title",
@@ -189,6 +310,14 @@
     } catch (_) { /* Audio is optional. */ }
   }
 
+  function syncMusic() {
+    if (state.mode === "playing" && !state.muted) {
+      music.play().catch(() => { /* Browser may wait for user gesture. */ });
+    } else {
+      music.pause();
+    }
+  }
+
   function startGame() {
     state.mode = "playing";
     state.playerLane = 1;
@@ -198,11 +327,13 @@
     state.spawnTimer = 0.15;
     state.nextSpawn = 0.55;
     state.elapsed = 0;
-    state.speed = 0.42;
+    state.speed = SPEED_START;
     state.shake = 0;
     state.flash = 0;
     state.dustTick = 0;
     state.roadSeed = makeRoadSeed();
+    menuCover.classList.add("hidden");
+    syncMusic();
     beep(520, 0.05, "square", 0.04);
     setTimeout(() => beep(780, 0.05, "square", 0.04), 60);
   }
@@ -214,6 +345,7 @@
     state.flash = 1;
     state.highScore = Math.max(state.highScore, state.score);
     localStorage.setItem("nyulKeruloHighScore", String(state.highScore));
+    syncMusic();
     beep(100, 0.22, "sawtooth", 0.08);
     setTimeout(() => beep(70, 0.28, "sawtooth", 0.06), 90);
   }
@@ -241,11 +373,24 @@
     state.obstacles.push({
       id: Math.random().toString(36).slice(2),
       lane,
+      laneVisual: lane,
       type,
+      variant: type === "rock" ? Math.floor(Math.random() * images.stones.length) :
+        type === "log" ? Math.floor(Math.random() * images.woods.length) : 0,
       z: 1.06,
       passed: false,
       wobble: Math.random() * Math.PI * 2,
-      bornAt: state.elapsed
+      bornAt: state.elapsed,
+      nextLaneHop: state.elapsed + rnd(0.7, 1.25),
+      laneHopTriggerZ: rnd(0.60, 0.92),
+      wantsLaneHop: isRabbitType(type) && Math.random() < rabbitLaneHopChance(),
+      hopCount: 0,
+      laneHopStart: -1,
+      laneHopDuration: 0.45,
+      laneFrom: lane,
+      laneTo: lane,
+      hopArc: 0,
+      animOffset: Math.random() * 10
     });
   }
 
@@ -272,7 +417,10 @@
 
     state.elapsed += dt;
     state.dustTick += dt;
-    state.speed = 0.43 + Math.min(0.28, state.score * 0.008) + Math.min(0.18, state.elapsed * 0.004);
+    state.speed = Math.min(
+      SPEED_MAX,
+      SPEED_START + Math.min(0.24, state.score * 0.006) + Math.min(0.22, state.elapsed * 0.0045)
+    );
     state.spawnTimer -= dt;
     state.laneVisual += (state.playerLane - state.laneVisual) * Math.min(1, dt * 11);
     state.shake = Math.max(0, state.shake - dt * 20);
@@ -288,6 +436,7 @@
     for (const ob of state.obstacles) {
       const jumpPush = ob.type === "jumpRabbit" ? 0.035 * Math.sin((state.elapsed - ob.bornAt) * 9) : 0;
       ob.z -= (state.speed + jumpPush) * dt;
+      updateRabbitLane(ob, dt);
 
       if (!ob.passed && ob.z <= PLAYER_HIT_Z) {
         ob.passed = true;
@@ -301,6 +450,62 @@
       }
     }
     state.obstacles = state.obstacles.filter(ob => ob.z > -0.18);
+  }
+
+  function isRabbitType(type) {
+    return type === "rabbit" || type === "jumpRabbit";
+  }
+
+  function rabbitLaneHopChance() {
+    if (state.elapsed >= 360) return 0.80;
+    if (state.elapsed >= 120) return 0.60;
+    return 0.40;
+  }
+
+  function laneIsClearForRabbit(targetLane, currentObstacle) {
+    return !state.obstacles.some(other => {
+      if (other === currentObstacle || other.passed) return false;
+      const otherLane = Math.round(other.laneVisual ?? other.lane);
+      return otherLane === targetLane && Math.abs(other.z - currentObstacle.z) < 0.28;
+    });
+  }
+
+  function updateRabbitLane(ob, dt) {
+    if (!isRabbitType(ob.type)) {
+      ob.laneVisual = ob.lane;
+      return;
+    }
+
+    if (ob.laneHopStart >= 0) {
+      const p = clamp((state.elapsed - ob.laneHopStart) / ob.laneHopDuration, 0, 1);
+      const e = p * p * (3 - 2 * p);
+      ob.laneVisual = ob.laneFrom + (ob.laneTo - ob.laneFrom) * e;
+      ob.hopArc = Math.sin(p * Math.PI);
+      if (p >= 1) {
+        ob.laneVisual = ob.lane;
+        ob.hopArc = 0;
+        ob.laneHopStart = -1;
+      }
+    } else {
+      ob.laneVisual += (ob.lane - ob.laneVisual) * Math.min(1, dt * 12);
+      ob.hopArc = 0;
+    }
+
+    if (ob.hopCount >= 1 || ob.laneHopStart >= 0 || !ob.wantsLaneHop) return;
+    if (ob.z < 0.52 || ob.z > ob.laneHopTriggerZ) return;
+
+    const options = [ob.lane - 1, ob.lane + 1].filter(lane =>
+      lane >= 0 && lane <= 2
+    );
+    if (!options.length) return;
+
+    const targetLane = choose(options);
+    ob.laneFrom = ob.laneVisual;
+    ob.laneTo = targetLane;
+    ob.lane = targetLane;
+    ob.laneHopDuration = rnd(0.38, 0.56);
+    ob.laneHopStart = state.elapsed;
+    ob.hopCount += 1;
   }
 
   function drawSky() {
@@ -540,11 +745,31 @@
     }
   }
 
+  function drawTrimmedImage(img, crop, centerX, bottomY, targetW, targetH, yOffset = 0, flip = false) {
+    if (!imageReady(img)) return false;
+    const w = Math.max(1, Math.round(targetW));
+    const h = Math.max(1, Math.round(targetH));
+    const dx = Math.round(-w / 2);
+    const dy = Math.round(bottomY - h + yOffset);
+
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+    if (flip) {
+      ctx.translate(Math.round(centerX), 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(img, crop.x, crop.y, crop.w, crop.h, dx, dy, w, h);
+    } else {
+      ctx.drawImage(img, crop.x, crop.y, crop.w, crop.h, Math.round(centerX - w / 2), dy, w, h);
+    }
+    ctx.restore();
+    return true;
+  }
+
   function drawObstacles() {
     const sorted = [...state.obstacles].sort((a, b) => b.z - a.z);
     for (const ob of sorted) {
       if (ob.z > 1.04) continue;
-      const pr = project(ob.lane, ob.z);
+      const pr = project(ob.laneVisual ?? ob.lane, ob.z);
       if (pr.y < ROAD_HORIZON || pr.y > H + 36) continue;
 
       // A dark ellipse-like block shadow, still pixelated.
@@ -552,17 +777,51 @@
       fill(pr.x - shadowW / 2, pr.y - 1, shadowW, Math.max(1, Math.floor(pr.unit * 0.75)), "rgba(30,25,22,.48)");
 
       if (ob.type === "rock") {
-        drawSprite(sprites.rock, pr.x, pr.y, pr.unit);
+        const idx = ob.variant % images.stones.length;
+        const size = pr.unit * 13.2;
+        if (!drawTrimmedImage(images.stones[idx], assetCrops.stones[idx], pr.x, pr.y + pr.unit * 0.8, size, size)) {
+          drawSprite(sprites.rock, pr.x, pr.y, pr.unit);
+        }
       } else if (ob.type === "log") {
-        drawSprite(sprites.log, pr.x, pr.y + pr.unit, pr.unit);
+        const idx = ob.variant % images.woods.length;
+        const crop = assetCrops.woods[idx];
+        const h = pr.unit * 15.4;
+        const w = h * (crop.w / crop.h);
+        if (!drawTrimmedImage(images.woods[idx], crop, pr.x, pr.y + pr.unit * 1.2, w, h)) {
+          drawSprite(sprites.log, pr.x, pr.y + pr.unit, pr.unit);
+        }
       } else if (ob.type === "rabbit") {
-        const bob = Math.sin(state.elapsed * 8 + ob.wobble) * Math.max(0, pr.unit - 1);
-        drawSprite(sprites.rabbit, pr.x, pr.y, pr.unit, bob);
+        const hopping = ob.hopArc > 0.02;
+        if (hopping) {
+          const f = Math.floor(((state.elapsed - ob.laneHopStart) * 10) % images.rabbitJump.length);
+          const crop = assetCrops.jump[f];
+          const h = pr.unit * 21.5;
+          const w = h * (crop.w / crop.h);
+          const yOffset = -ob.hopArc * pr.unit * 7;
+          if (!drawTrimmedImage(images.rabbitJump[f], crop, pr.x, pr.y, w, h, yOffset, ob.laneTo < ob.laneFrom)) {
+            drawSprite(sprites[`jump${f}`], pr.x, pr.y, pr.unit, yOffset, ob.laneTo < ob.laneFrom);
+          }
+        } else {
+          const f = Math.floor((state.elapsed * 9 + ob.animOffset) % images.rabbitRun.length);
+          const crop = assetCrops.run[f];
+          const h = pr.unit * 21.2;
+          const w = h * (crop.w / crop.h);
+          const bob = Math.sin(state.elapsed * 8 + ob.wobble) * Math.max(0, pr.unit - 1);
+          if (!drawTrimmedImage(images.rabbitRun[f], crop, pr.x, pr.y, w, h, bob, Math.sin(ob.wobble) > 0)) {
+            drawSprite(sprites.rabbit, pr.x, pr.y, pr.unit, bob);
+          }
+        }
       } else if (ob.type === "jumpRabbit") {
-        const f = Math.floor(((state.elapsed - ob.bornAt) * 7.5) % 4);
-        const hop = [0, -4, -8, -3][f] * pr.unit;
+        const f = Math.floor(((state.elapsed - ob.bornAt) * 7.5) % images.rabbitJump.length);
+        const crop = assetCrops.jump[f];
+        const h = pr.unit * 22.5;
+        const w = h * (crop.w / crop.h);
+        const hop = ([0, -4, -8, -3][f] - ob.hopArc * 7) * pr.unit;
         const forwardKick = Math.sin((state.elapsed - ob.bornAt) * 12) * pr.unit * 0.5;
-        drawSprite(sprites[`jump${f}`], pr.x + forwardKick, pr.y, pr.unit, hop, Math.sin(ob.wobble) > 0);
+        const flip = Math.sin(ob.wobble) > 0;
+        if (!drawTrimmedImage(images.rabbitJump[f], crop, pr.x + forwardKick, pr.y, w, h, hop, flip)) {
+          drawSprite(sprites[`jump${f}`], pr.x + forwardKick, pr.y, pr.unit, hop, flip);
+        }
       }
 
       // Tiny warning glint for incoming jumping rabbit.
@@ -573,6 +832,27 @@
   }
 
   function drawScooter() {
+    if (!imageReady(images.scooter)) {
+      drawProceduralScooter();
+      return;
+    }
+
+    const wob = Math.sin(state.elapsed * 16) * (state.mode === "playing" ? 1.4 : 0.4);
+    // Visual lane movement stays in sync with the collision lane.
+    const targetX = W / 2 + (state.laneVisual - 1) * SCOOTER_LANE_SPREAD;
+    const drawW = 520;
+    const drawH = drawW * (images.scooter.naturalHeight / images.scooter.naturalWidth);
+    const bottomY = H + 55 + Math.sin(state.elapsed * 13) * (state.mode === "playing" ? 1.2 : 0.3);
+
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+    ctx.translate(Math.round(targetX), Math.round(bottomY));
+    ctx.rotate(wob * 0.006);
+    ctx.drawImage(images.scooter, Math.round(-drawW / 2), Math.round(-drawH), Math.round(drawW), Math.round(drawH));
+    ctx.restore();
+  }
+
+  function drawProceduralScooter() {
     const wob = Math.sin(state.elapsed * 16) * (state.mode === "playing" ? 1.4 : 0.4);
     // Visual lane movement now matches the logical lane used for collisions:
     // left lane -> screen left, center -> center, right lane -> screen right.
@@ -697,6 +977,11 @@
     requestAnimationFrame(loop);
   }
 
+  menuCover.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    if (state.mode !== "playing") startGame();
+  });
+
   window.addEventListener("keydown", (e) => {
     if (["ArrowLeft", "ArrowRight", " ", "Enter", "KeyA", "KeyD", "KeyM"].includes(e.code)) e.preventDefault();
     if (e.code === "ArrowLeft" || e.code === "KeyA") changeLane(-1);
@@ -706,6 +991,7 @@
     }
     if (e.code === "KeyM") {
       state.muted = !state.muted;
+      syncMusic();
       if (!state.muted) beep(660, 0.04, "square", 0.03);
     }
   }, { passive: false });
