@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <link rel="preload" href="roller_assets/game_music.mp3" as="audio" type="audio/mpeg" />
   <title>Nyúl Kerülő 8-bit - Rolleres mini játék</title>
   <style>
     :root { color-scheme: dark; }
@@ -152,7 +153,7 @@
 
   const ASSET_ROOT = "roller_assets/";
   const SPEED_START = 0.43;
-  const SPEED_MAX = 3.0;
+  const SPEED_MAX = 0.82;
 
   function loadImage(src) {
     const img = new Image();
@@ -206,6 +207,9 @@
   music.loop = true;
   music.volume = 0.28;
   music.preload = "auto";
+  music.setAttribute("preload", "auto");
+  music.setAttribute("playsinline", "");
+  try { music.load(); } catch (_) { /* Music loading is optional. */ }
 
   const state = {
     mode: "title",
@@ -310,13 +314,35 @@
     } catch (_) { /* Audio is optional. */ }
   }
 
+  let musicWanted = false;
   function syncMusic() {
-    if (state.mode === "playing" && !state.muted) {
-      music.play().catch(() => { /* Browser may wait for user gesture. */ });
+    musicWanted = state.mode === "playing" && !state.muted;
+    if (musicWanted) {
+      if (music.readyState === 0) {
+        try { music.load(); } catch (_) { /* Music loading is optional. */ }
+      }
+      const playPromise = music.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => { /* Browser may wait for a user gesture or enough buffered data. */ });
+      }
     } else {
       music.pause();
     }
   }
+
+  function retryMusicFromGesture() {
+    if (musicWanted && music.paused) syncMusic();
+  }
+
+  function prepareMusicFromGesture() {
+    if (!state.muted && music.readyState === 0) {
+      try { music.load(); } catch (_) { /* Music loading is optional. */ }
+    }
+    retryMusicFromGesture();
+  }
+
+  music.addEventListener("canplay", retryMusicFromGesture);
+  music.addEventListener("loadeddata", retryMusicFromGesture);
 
   function startGame() {
     state.mode = "playing";
@@ -457,9 +483,9 @@
   }
 
   function rabbitLaneHopChance() {
-    if (state.elapsed >= 360) return 0.80;
-    if (state.elapsed >= 120) return 0.60;
-    return 0.40;
+    if (state.elapsed >= 360) return 0.50;
+    if (state.elapsed >= 240) return 0.20;
+    return 0.10;
   }
 
   function laneIsClearForRabbit(targetLane, currentObstacle) {
@@ -727,12 +753,23 @@
     }
   };
 
+  function spriteVerticalScale() {
+    const displayW = canvas.clientWidth || window.innerWidth || W;
+    const displayH = canvas.clientHeight || window.innerHeight || H;
+    if (displayW >= displayH) return 1;
+    const scaleX = displayW / W;
+    const scaleY = displayH / H;
+    return clamp(scaleX / scaleY, 0.05, 1);
+  }
+
   function drawSprite(sprite, centerX, bottomY, unit, yOffset = 0, flip = false) {
     const rows = sprite.rows;
     const h = rows.length;
     const w = Math.max(...rows.map(r => r.length));
+    const sy = spriteVerticalScale();
+    const unitY = unit * sy;
     const x0 = Math.round(centerX - (w * unit) / 2);
-    const y0 = Math.round(bottomY - h * unit + yOffset);
+    const y0 = Math.round(bottomY - h * unitY + yOffset * sy);
     const pal = sprite.palette;
     for (let r = 0; r < h; r++) {
       const row = rows[r];
@@ -740,17 +777,18 @@
         const ch = row[flip ? row.length - 1 - c : c];
         if (ch === "." || ch === " ") continue;
         ctx.fillStyle = pal[ch] || "#ff00ff";
-        ctx.fillRect(x0 + c * unit, y0 + r * unit, unit, unit);
+        ctx.fillRect(x0 + c * unit, y0 + r * unitY, unit, unitY);
       }
     }
   }
 
   function drawTrimmedImage(img, crop, centerX, bottomY, targetW, targetH, yOffset = 0, flip = false) {
     if (!imageReady(img)) return false;
+    const sy = spriteVerticalScale();
     const w = Math.max(1, Math.round(targetW));
-    const h = Math.max(1, Math.round(targetH));
+    const h = Math.max(1, Math.round(targetH * sy));
     const dx = Math.round(-w / 2);
-    const dy = Math.round(bottomY - h + yOffset);
+    const dy = Math.round(bottomY - h + yOffset * sy);
 
     ctx.save();
     ctx.imageSmoothingEnabled = false;
@@ -840,9 +878,10 @@
     const wob = Math.sin(state.elapsed * 16) * (state.mode === "playing" ? 1.4 : 0.4);
     // Visual lane movement stays in sync with the collision lane.
     const targetX = W / 2 + (state.laneVisual - 1) * SCOOTER_LANE_SPREAD;
+    const sy = spriteVerticalScale();
     const drawW = 520;
-    const drawH = drawW * (images.scooter.naturalHeight / images.scooter.naturalWidth);
-    const bottomY = H + 55 + Math.sin(state.elapsed * 13) * (state.mode === "playing" ? 1.2 : 0.3);
+    const drawH = drawW * (images.scooter.naturalHeight / images.scooter.naturalWidth) * sy;
+    const bottomY = H + 55 * sy + Math.sin(state.elapsed * 13) * (state.mode === "playing" ? 1.2 : 0.3) * sy;
 
     ctx.save();
     ctx.imageSmoothingEnabled = false;
@@ -1013,6 +1052,12 @@
     ctx.imageSmoothingEnabled = false;
   }
   window.addEventListener("resize", fit);
+  window.addEventListener("pointerdown", prepareMusicFromGesture, { passive: true, capture: true });
+  window.addEventListener("touchstart", prepareMusicFromGesture, { passive: true, capture: true });
+  window.addEventListener("keydown", prepareMusicFromGesture, { passive: true, capture: true });
+  window.addEventListener("pointerup", retryMusicFromGesture, { passive: true });
+  window.addEventListener("click", retryMusicFromGesture, { passive: true });
+  window.addEventListener("touchend", retryMusicFromGesture, { passive: true });
   fit();
   requestAnimationFrame(loop);
 })();
