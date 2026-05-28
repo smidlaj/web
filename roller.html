@@ -881,7 +881,12 @@
     const sy = spriteVerticalScale();
     const drawW = 520;
     const drawH = drawW * (images.scooter.naturalHeight / images.scooter.naturalWidth) * sy;
-    const bottomY = H + 55 * sy + Math.sin(state.elapsed * 13) * (state.mode === "playing" ? 1.2 : 0.3) * sy;
+    const scooterBob = Math.sin(state.elapsed * 13) * (state.mode === "playing" ? 1.2 : 0.3) * sy;
+    let bottomY = H + 55 * sy + scooterBob;
+    if ((canvas.clientWidth || window.innerWidth || W) < (canvas.clientHeight || window.innerHeight || H)) {
+      const rotationGap = Math.abs(Math.sin(wob * 0.006)) * (drawW / 2) + 1;
+      bottomY = Math.min(bottomY, H - rotationGap);
+    }
 
     ctx.save();
     ctx.imageSmoothingEnabled = false;
